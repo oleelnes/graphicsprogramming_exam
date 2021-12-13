@@ -3,7 +3,7 @@
 #
 cmake_minimum_required (VERSION 3.15)
 
-project ("Eksamen" VERSION 0.2)
+project ("Eksamen" VERSION 0.3)
 
 # executable file creation
 add_executable(${PROJECT_NAME})
@@ -29,7 +29,7 @@ target_sources(
     "source/Menu.cpp" 
     "source/Menu.h" 
     "source/Overlay.cpp" 
-    "source/Overlay.h" "source/Cube.cpp" "source/Cube.h" "source/Camera.h"
+    "source/Overlay.h" "source/Cube.cpp" "source/Cube.h" 
     "source/ImguiHandler.h" "source/ImguiHandler.cpp"
     "source/Block.h" "source/Block.cpp"
     
@@ -78,6 +78,15 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/shaders/light_cube.vs
 # Copying the triangle.fs file to current binary directory
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/shaders/light_cube.fs
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/shaders)
+
+                         # Copying the pacman.png file to current binary directory
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/grid_tile.png
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/active_block_tile.png
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
+
+
 
      # Enable C++ 17
 target_compile_features(

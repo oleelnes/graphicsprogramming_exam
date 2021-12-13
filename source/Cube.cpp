@@ -7,8 +7,12 @@ struct Vertex {
 };
 
 Cube::Cube(){
-	glGenVertexArrays(1, &cubeVAO);
-	createCubeVAO();
+	//glGenVertexArrays(1, &cubeVAO);
+	//createCubeVAO();
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	gridTexture = load_opengl_texture("resources/textures/grid_tile.png");
+	activeBlockTexture = load_opengl_texture("resources/textures/active_block_tile.png");
 }
 
 void Cube::createCubeVAO(){
@@ -205,6 +209,9 @@ unsigned int Cube::createCubeTunnel(int x_stride, int y_stride, int z_stride)
 
 	//std::cout << "entries: " << tempVec.size() << std::endl;
 
+	std::cout << "tempvec location 3 x: " << tempVec[1].location.x << std::endl;
+
+
 	unsigned int tunnel_VAO;
 	glGenVertexArrays(1, &tunnel_VAO);
 
@@ -226,4 +233,34 @@ unsigned int Cube::createCubeTunnel(int x_stride, int y_stride, int z_stride)
 	
 	
 	return tunnel_VAO;
+}
+
+
+GLuint Cube::load_opengl_texture(const std::string& filepath)
+{
+	int w, h, bpp;
+
+
+	auto pixels = stbi_load(filepath.c_str(), &w, &h, &bpp, STBI_rgb_alpha);
+	if (!pixels) std::cout << "error: image failed to load" << std::endl;
+	else std::cout << "success! image loaded" << std::endl;
+	GLuint tex;
+	glGenTextures(1, &tex);
+	//glActiveTexture(GL_TEXTURE0 + slot);
+	glBindTexture(GL_TEXTURE_2D, tex);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+
+	if (pixels) stbi_image_free(pixels);
+
+	return tex;
 }

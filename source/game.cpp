@@ -26,6 +26,8 @@ void game::run(){
 	ImGui_ImplOpenGL3_Init("#version 430 core");
 	
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	deltaTime = 0.0f;
 	lastFrame = 0.0f;
 
@@ -40,6 +42,7 @@ void game::run(){
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
+		renderHandler->updateSpeed(2.5 * deltaTime);
 		//renderHandler->renderer();
 		
 		
@@ -118,37 +121,12 @@ void game::input()
 		glfwGetKey(gameWindow->winWindow, GLFW_KEY_A) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_D) != GLFW_PRESS)
 		buttonPressed = false;
 
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_SPACE) == GLFW_PRESS && !buttonPressed) {
+		//buttonPressed = true;
+		renderHandler->keyInput(4, cameraSpeed);
+	}
 
 	glfwGetCursorPos(gameWindow->winWindow, &xPos, &yPos);
-	
-	if (firstMouse)
-	{
-		lastX = xPos;
-		lastY = yPos;
-		firstMouse = false;
-	}
-	lastxoffset = xPos - lastX;
-	lastyoffset = lastY - yPos;
-
-	lastX = xPos;
-	lastY = yPos;
-
-
-	//part 2
-	float xoffset = lastxoffset;
-	float yoffset = lastyoffset;
-
-	float moveIncrement = sensitivity * deltaTime;
-	xoffset *= moveIncrement;
-	yoffset *= moveIncrement;
-
-	yaw += xoffset;
-	pitch += yoffset;
-
-	if (pitch > 89.0f)
-		pitch = 89.0f;
-	if (pitch < -89.0f)
-		pitch = -89.0f;
 
 	glm::vec3 direction;
 	direction.x = cos(glm::radians(-270.0f)) * cos(glm::radians(0.0f));

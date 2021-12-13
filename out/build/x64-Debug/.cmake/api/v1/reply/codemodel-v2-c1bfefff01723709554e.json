@@ -1,0 +1,320 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"build" : "external",
+					"childIndexes" : 
+					[
+						2,
+						3,
+						4,
+						7,
+						9
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "external"
+				},
+				{
+					"build" : "external/glad",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "external/glad",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "external/stb",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "external/stb",
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"build" : "_deps/glm_external-build",
+					"childIndexes" : 
+					[
+						5,
+						6
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.2"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "out/build/x64-Debug/_deps/glm_external-src",
+					"targetIndexes" : 
+					[
+						8
+					]
+				},
+				{
+					"build" : "_deps/glm_external-build/glm",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.2"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 1,
+					"source" : "out/build/x64-Debug/_deps/glm_external-src/glm",
+					"targetIndexes" : 
+					[
+						4,
+						5
+					]
+				},
+				{
+					"build" : "_deps/glm_external-build/test",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.2"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 1,
+					"source" : "out/build/x64-Debug/_deps/glm_external-src/test"
+				},
+				{
+					"build" : "_deps/glfw_external-build",
+					"childIndexes" : 
+					[
+						8
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 2,
+					"source" : "out/build/x64-Debug/_deps/glfw_external-src"
+				},
+				{
+					"build" : "_deps/glfw_external-build/src",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 7,
+					"projectIndex" : 2,
+					"source" : "out/build/x64-Debug/_deps/glfw_external-src/src",
+					"targetIndexes" : 
+					[
+						3,
+						9
+					]
+				},
+				{
+					"build" : "_deps/tinyobjloader_external-build",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.2"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 3,
+					"source" : "out/build/x64-Debug/_deps/tinyobjloader_external-src",
+					"targetIndexes" : 
+					[
+						7
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					],
+					"name" : "Eksamen",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						6
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4,
+						5,
+						6
+					],
+					"name" : "glm",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						4,
+						5,
+						8
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						7,
+						8
+					],
+					"name" : "GLFW",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						3,
+						9
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						9
+					],
+					"name" : "tinyobjloader",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						7
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Eksamen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Eksamen-Debug-2682ab8589f3e687922b.json",
+					"name" : "Eksamen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "copy_shaders::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-copy_shaders-Debug-323910021007bd1c8ca8.json",
+					"name" : "copy_shaders",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "glad::@55512df44c152ef9a2ca",
+					"jsonFile" : "target-glad-Debug-db0ef8ab409ae9b03859.json",
+					"name" : "glad",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "glfw::@896ddacb1c6295e18004",
+					"jsonFile" : "target-glfw-Debug-f74fa08e6e13dd293db6.json",
+					"name" : "glfw",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "glm_shared::@87bc09627dba3d511b88",
+					"jsonFile" : "target-glm_shared-Debug-1cf2fa6ab656cb5f1f79.json",
+					"name" : "glm_shared",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "glm_static::@87bc09627dba3d511b88",
+					"jsonFile" : "target-glm_static-Debug-fe6bb37972fde61659ff.json",
+					"name" : "glm_static",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "stbimage::@75eb285bbb843d317cb7",
+					"jsonFile" : "target-stbimage-Debug-93813b4afcecfee994b3.json",
+					"name" : "stbimage",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "tinyobjloader::@ec0e27e266e7b1f7ab31",
+					"jsonFile" : "target-tinyobjloader-Debug-0cb8325ffe3f56b7492e.json",
+					"name" : "tinyobjloader",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "uninstall::@b8002c2a0caa08d99d6b",
+					"jsonFile" : "target-uninstall-Debug-cfcd9fca2892123f9b86.json",
+					"name" : "uninstall",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "update_mappings::@896ddacb1c6295e18004",
+					"jsonFile" : "target-update_mappings-Debug-cde4068db249b0fa89ca.json",
+					"name" : "update_mappings",
+					"projectIndex" : 2
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/oleel/Documents/SKOLE/semester_1/Grafprog/eksamensforberedelser/eksamensengine/out/build/x64-Debug",
+		"source" : "C:/Users/oleel/Documents/SKOLE/semester_1/Grafprog/eksamensforberedelser/eksamensengine"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 2
+	}
+}
