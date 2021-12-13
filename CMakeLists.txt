@@ -1,9 +1,9 @@
 ﻿# CMakeList.txt : Top-level CMake project file, do global configuration
 # and include sub-projects here.
 #
-cmake_minimum_required (VERSION 3.14)
+cmake_minimum_required (VERSION 3.15)
 
-project ("Eksamensengine" VERSION 0.1)
+project ("Eksamen" VERSION 0.2)
 
 # executable file creation
 add_executable(${PROJECT_NAME})
@@ -31,6 +31,7 @@ target_sources(
     "source/Overlay.cpp" 
     "source/Overlay.h" "source/Cube.cpp" "source/Cube.h" "source/Camera.h"
     "source/ImguiHandler.h" "source/ImguiHandler.cpp"
+    "source/Block.h" "source/Block.cpp"
     
     ${CMAKE_CURRENT_LIST_DIR}/source/imgui/imconfig.h
     ${CMAKE_CURRENT_LIST_DIR}/source/imgui/imgui.cpp
@@ -42,7 +43,7 @@ target_sources(
     ${CMAKE_CURRENT_LIST_DIR}/source/imgui/imgui_impl_opengl3.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/imgui/imgui_impl_opengl3.h
     ${CMAKE_CURRENT_LIST_DIR}/source/imgui/imgui_internal.h
-    ${CMAKE_CURRENT_LIST_DIR}/source/imgui/imgui_widgets.cpp)
+    ${CMAKE_CURRENT_LIST_DIR}/source/imgui/imgui_widgets.cpp )
 
 # Include directories
 target_include_directories(

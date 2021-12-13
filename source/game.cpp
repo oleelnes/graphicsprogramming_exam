@@ -14,6 +14,7 @@ This method initializes all the necessary pointers and functions.
 void game::gameInit(){
 	gameWindow->windowCreator();
 	renderHandler = new RenderHandler();
+	buttonPressed = false;
 	
 }
 
@@ -93,16 +94,33 @@ void game::input()
 		
 	}
 	float cameraSpeed = 2.5 * deltaTime;
-	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_W) == GLFW_PRESS)
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_W) == GLFW_PRESS && !buttonPressed) {
+		buttonPressed = true;
 		renderHandler->keyInput(0, cameraSpeed);
-	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_S) == GLFW_PRESS) 
+	}
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_S) == GLFW_PRESS && !buttonPressed) {
+
+		buttonPressed = true;
 		renderHandler->keyInput(1, cameraSpeed);
-	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_A) == GLFW_PRESS)
+	}
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_A) == GLFW_PRESS && !buttonPressed) {
+		buttonPressed = true;
 		renderHandler->keyInput(2, cameraSpeed);
-	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_D) == GLFW_PRESS)
+
+	}
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_D) == GLFW_PRESS && !buttonPressed) {
+		buttonPressed = true;
 		renderHandler->keyInput(3, cameraSpeed);
+	}
+
+
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_W) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_S) != GLFW_PRESS &&
+		glfwGetKey(gameWindow->winWindow, GLFW_KEY_A) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_D) != GLFW_PRESS)
+		buttonPressed = false;
+
 
 	glfwGetCursorPos(gameWindow->winWindow, &xPos, &yPos);
+	
 	if (firstMouse)
 	{
 		lastX = xPos;
@@ -133,11 +151,12 @@ void game::input()
 		pitch = -89.0f;
 
 	glm::vec3 direction;
-	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	direction.y = sin(glm::radians(pitch));
-	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	direction.x = cos(glm::radians(-270.0f)) * cos(glm::radians(0.0f));
+	direction.y = sin(glm::radians(0.0f));
+	direction.z = sin(glm::radians(-270.0f)) * cos(glm::radians(0.0f));
 	renderHandler->mouseInput(direction);
 	lastxoffset = 0.0f; lastyoffset = 0.0f;
+	//std::cout << "pitch: " << pitch << " yaw: " << yaw << std::endl;
 }
 
 void game::mouseInput()

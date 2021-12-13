@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: Eksamensengine
+# Project: Eksamen
 # Configurations: Debug
 # =============================================================================
 
@@ -35,153 +35,161 @@ CONFIGURATION = Debug
 include CMakeFiles\rules.ninja
 
 # =============================================================================
-# Object build statements for EXECUTABLE target Eksamensengine
+# Object build statements for EXECUTABLE target Eksamen
 
 
 #############################################
-# Order-only phony target for Eksamensengine
+# Order-only phony target for Eksamen
 
-build cmake_object_order_depends_target_Eksamensengine: phony || cmake_object_order_depends_target_glad cmake_object_order_depends_target_glfw cmake_object_order_depends_target_stbimage cmake_object_order_depends_target_tinyobjloader
+build cmake_object_order_depends_target_Eksamen: phony || cmake_object_order_depends_target_glad cmake_object_order_depends_target_glfw cmake_object_order_depends_target_stbimage cmake_object_order_depends_target_tinyobjloader
 
-build CMakeFiles\Eksamensengine.dir\source\main.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\main.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\main.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\main.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamensengine.dir\source\window.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\window.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\window.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\window.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamensengine.dir\source\game.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\game.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\game.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\game.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamensengine.dir\source\Shader.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\Shader.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\Shader.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\Shader.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamensengine.dir\source\RenderHandler.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\RenderHandler.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\RenderHandler.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\RenderHandler.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamensengine.dir\source\Menu.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\Menu.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\Menu.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\Menu.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamensengine.dir\source\Overlay.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\Overlay.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\Overlay.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\Overlay.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamensengine.dir\source\Cube.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\Cube.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\Cube.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\Cube.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamensengine.dir\source\ImguiHandler.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\ImguiHandler.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\ImguiHandler.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\ImguiHandler.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamensengine.dir\source\imgui\imgui.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\imgui\imgui.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\Block.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\Block.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source\imgui
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamensengine.dir\source\imgui\imgui_demo.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\imgui\imgui_demo.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\imgui\imgui.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\imgui\imgui.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source\imgui
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source\imgui
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamensengine.dir\source\imgui\imgui_draw.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\imgui\imgui_draw.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\imgui\imgui_demo.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\imgui\imgui_demo.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source\imgui
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source\imgui
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamensengine.dir\source\imgui\imgui_impl_glfw.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\imgui\imgui_impl_glfw.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\imgui\imgui_draw.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\imgui\imgui_draw.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source\imgui
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source\imgui
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamensengine.dir\source\imgui\imgui_impl_opengl3.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\imgui\imgui_impl_opengl3.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\imgui\imgui_impl_glfw.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\imgui\imgui_impl_glfw.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source\imgui
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source\imgui
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamensengine.dir\source\imgui\imgui_widgets.cpp.obj: CXX_COMPILER__Eksamensengine_Debug ..\..\..\source\imgui\imgui_widgets.cpp || cmake_object_order_depends_target_Eksamensengine
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+build CMakeFiles\Eksamen.dir\source\imgui\imgui_impl_opengl3.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\imgui\imgui_impl_opengl3.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamensengine.dir\source\imgui
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_PDB = Eksamensengine.pdb
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source\imgui
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
+
+build CMakeFiles\Eksamen.dir\source\imgui\imgui_widgets.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\imgui\imgui_widgets.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
+  INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source\imgui
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target Eksamensengine
+# Link build statements for EXECUTABLE target Eksamen
 
 
 #############################################
-# Link the executable Eksamensengine.exe
+# Link the executable Eksamen.exe
 
-build Eksamensengine.exe: CXX_EXECUTABLE_LINKER__Eksamensengine_Debug CMakeFiles\Eksamensengine.dir\source\main.cpp.obj CMakeFiles\Eksamensengine.dir\source\window.cpp.obj CMakeFiles\Eksamensengine.dir\source\game.cpp.obj CMakeFiles\Eksamensengine.dir\source\Shader.cpp.obj CMakeFiles\Eksamensengine.dir\source\RenderHandler.cpp.obj CMakeFiles\Eksamensengine.dir\source\Menu.cpp.obj CMakeFiles\Eksamensengine.dir\source\Overlay.cpp.obj CMakeFiles\Eksamensengine.dir\source\Cube.cpp.obj CMakeFiles\Eksamensengine.dir\source\ImguiHandler.cpp.obj CMakeFiles\Eksamensengine.dir\source\imgui\imgui.cpp.obj CMakeFiles\Eksamensengine.dir\source\imgui\imgui_demo.cpp.obj CMakeFiles\Eksamensengine.dir\source\imgui\imgui_draw.cpp.obj CMakeFiles\Eksamensengine.dir\source\imgui\imgui_impl_glfw.cpp.obj CMakeFiles\Eksamensengine.dir\source\imgui\imgui_impl_opengl3.cpp.obj CMakeFiles\Eksamensengine.dir\source\imgui\imgui_widgets.cpp.obj | external\glad\glad.lib _deps\glfw_external-build\src\glfw3.lib _deps\tinyobjloader_external-build\tinyobjloader.lib external\stb\stbimage.lib || _deps\glfw_external-build\src\glfw3.lib _deps\tinyobjloader_external-build\tinyobjloader.lib external\glad\glad.lib external\stb\stbimage.lib
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+build Eksamen.exe: CXX_EXECUTABLE_LINKER__Eksamen_Debug CMakeFiles\Eksamen.dir\source\main.cpp.obj CMakeFiles\Eksamen.dir\source\window.cpp.obj CMakeFiles\Eksamen.dir\source\game.cpp.obj CMakeFiles\Eksamen.dir\source\Shader.cpp.obj CMakeFiles\Eksamen.dir\source\RenderHandler.cpp.obj CMakeFiles\Eksamen.dir\source\Menu.cpp.obj CMakeFiles\Eksamen.dir\source\Overlay.cpp.obj CMakeFiles\Eksamen.dir\source\Cube.cpp.obj CMakeFiles\Eksamen.dir\source\ImguiHandler.cpp.obj CMakeFiles\Eksamen.dir\source\Block.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_demo.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_draw.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_impl_glfw.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_impl_opengl3.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_widgets.cpp.obj | external\glad\glad.lib _deps\glfw_external-build\src\glfw3.lib _deps\tinyobjloader_external-build\tinyobjloader.lib external\stb\stbimage.lib || _deps\glfw_external-build\src\glfw3.lib _deps\tinyobjloader_external-build\tinyobjloader.lib external\glad\glad.lib external\stb\stbimage.lib
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = external\glad\glad.lib  _deps\glfw_external-build\src\glfw3.lib  _deps\tinyobjloader_external-build\tinyobjloader.lib  external\stb\stbimage.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
-  OBJECT_DIR = CMakeFiles\Eksamensengine.dir
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamensengine.dir\
-  TARGET_FILE = Eksamensengine.exe
-  TARGET_IMPLIB = Eksamensengine.lib
-  TARGET_PDB = Eksamensengine.pdb
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_FILE = Eksamen.exe
+  TARGET_IMPLIB = Eksamen.lib
+  TARGET_PDB = Eksamen.pdb
 
 
 #############################################
@@ -322,7 +330,7 @@ build external\list_install_components: phony
 build cmake_object_order_depends_target_glad: phony || external\glad\CMakeFiles\glad.dir
 
 build external\glad\CMakeFiles\glad.dir\glad\src\glad.c.obj: C_COMPILER__glad_Debug ..\..\..\external\glad\glad\src\glad.c || cmake_object_order_depends_target_glad
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd
   INCLUDES = -I..\..\..\external\glad\glad\include
   OBJECT_DIR = external\glad\CMakeFiles\glad.dir
   OBJECT_FILE_DIR = external\glad\CMakeFiles\glad.dir\glad\src
@@ -338,7 +346,7 @@ build external\glad\CMakeFiles\glad.dir\glad\src\glad.c.obj: C_COMPILER__glad_De
 # Link the static library external\glad\glad.lib
 
 build external\glad\glad.lib: C_STATIC_LIBRARY_LINKER__glad_Debug external\glad\CMakeFiles\glad.dir\glad\src\glad.c.obj
-  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1
+  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd
   LINK_FLAGS = /machine:x64
   OBJECT_DIR = external\glad\CMakeFiles\glad.dir
   POST_BUILD = cd .
@@ -427,7 +435,7 @@ build external\stb\rebuild_cache: phony external\stb\CMakeFiles\rebuild_cache.ut
 build cmake_object_order_depends_target_stbimage: phony || external\stb\CMakeFiles\stbimage.dir
 
 build external\stb\CMakeFiles\stbimage.dir\stb_image_impl.cpp.obj: CXX_COMPILER__stbimage_Debug ..\..\..\external\stb\stb_image_impl.cpp || cmake_object_order_depends_target_stbimage
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd
   INCLUDES = -I..\..\..\external\stb\include
   OBJECT_DIR = external\stb\CMakeFiles\stbimage.dir
   OBJECT_FILE_DIR = external\stb\CMakeFiles\stbimage.dir
@@ -443,7 +451,7 @@ build external\stb\CMakeFiles\stbimage.dir\stb_image_impl.cpp.obj: CXX_COMPILER_
 # Link the static library external\stb\stbimage.lib
 
 build external\stb\stbimage.lib: CXX_STATIC_LIBRARY_LINKER__stbimage_Debug external\stb\CMakeFiles\stbimage.dir\stb_image_impl.cpp.obj
-  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd
   LINK_FLAGS = /machine:x64
   OBJECT_DIR = external\stb\CMakeFiles\stbimage.dir
   POST_BUILD = cd .
@@ -615,7 +623,7 @@ build cmake_object_order_depends_target_glm_static: phony || _deps\glm_external-
 
 build _deps\glm_external-build\glm\CMakeFiles\glm_static.dir\detail\glm.cpp.obj: CXX_COMPILER__glm_static_Debug _deps\glm_external-src\glm\detail\glm.cpp || cmake_object_order_depends_target_glm_static
   DEFINES = -D_CRT_SECURE_NO_WARNINGS
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 /Za /fp:precise /W4 /WX /wd4309 /wd4324 /wd4389 /wd4127 /wd4267 /wd4146 /wd4201 /wd4464 /wd4514 /wd4701 /wd4820 /wd4365
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd /Za /fp:precise /W4 /WX /wd4309 /wd4324 /wd4389 /wd4127 /wd4267 /wd4146 /wd4201 /wd4464 /wd4514 /wd4701 /wd4820 /wd4365
   INCLUDES = -I_deps\glm_external-src -I_deps\glm_external-src\glm\..
   OBJECT_DIR = _deps\glm_external-build\glm\CMakeFiles\glm_static.dir
   OBJECT_FILE_DIR = _deps\glm_external-build\glm\CMakeFiles\glm_static.dir\detail
@@ -631,7 +639,7 @@ build _deps\glm_external-build\glm\CMakeFiles\glm_static.dir\detail\glm.cpp.obj:
 # Link the static library _deps\glm_external-build\glm\glm_static.lib
 
 build _deps\glm_external-build\glm\glm_static.lib: CXX_STATIC_LIBRARY_LINKER__glm_static_Debug _deps\glm_external-build\glm\CMakeFiles\glm_static.dir\detail\glm.cpp.obj
-  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd
   LINK_FLAGS = /machine:x64
   OBJECT_DIR = _deps\glm_external-build\glm\CMakeFiles\glm_static.dir
   POST_BUILD = cd .
@@ -651,7 +659,7 @@ build cmake_object_order_depends_target_glm_shared: phony || _deps\glm_external-
 
 build _deps\glm_external-build\glm\CMakeFiles\glm_shared.dir\detail\glm.cpp.obj: CXX_COMPILER__glm_shared_Debug _deps\glm_external-src\glm\detail\glm.cpp || cmake_object_order_depends_target_glm_shared
   DEFINES = -D_CRT_SECURE_NO_WARNINGS -Dglm_shared_EXPORTS
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 /Za /fp:precise /W4 /WX /wd4309 /wd4324 /wd4389 /wd4127 /wd4267 /wd4146 /wd4201 /wd4464 /wd4514 /wd4701 /wd4820 /wd4365
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd /Za /fp:precise /W4 /WX /wd4309 /wd4324 /wd4389 /wd4127 /wd4267 /wd4146 /wd4201 /wd4464 /wd4514 /wd4701 /wd4820 /wd4365
   INCLUDES = -I_deps\glm_external-src -I_deps\glm_external-src\glm\..
   OBJECT_DIR = _deps\glm_external-build\glm\CMakeFiles\glm_shared.dir
   OBJECT_FILE_DIR = _deps\glm_external-build\glm\CMakeFiles\glm_shared.dir\detail
@@ -667,7 +675,7 @@ build _deps\glm_external-build\glm\CMakeFiles\glm_shared.dir\detail\glm.cpp.obj:
 # Link the shared library _deps\glm_external-build\glm\glm_shared.dll
 
 build _deps\glm_external-build\glm\glm_shared.dll _deps\glm_external-build\glm\glm_shared.lib: CXX_SHARED_LIBRARY_LINKER__glm_shared_Debug _deps\glm_external-build\glm\CMakeFiles\glm_shared.dir\detail\glm.cpp.obj
-  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = _deps\glm_external-build\glm\CMakeFiles\glm_shared.dir
@@ -841,7 +849,7 @@ build cmake_object_order_depends_target_glfw: phony || _deps\glfw_external-build
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\context.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\context.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -850,7 +858,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\context.c.obj: C_COMPILE
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\init.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\init.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -859,7 +867,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\init.c.obj: C_COMPILER__
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\input.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\input.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -868,7 +876,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\input.c.obj: C_COMPILER_
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\monitor.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\monitor.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -877,7 +885,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\monitor.c.obj: C_COMPILE
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\platform.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\platform.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -886,7 +894,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\platform.c.obj: C_COMPIL
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\vulkan.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\vulkan.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -895,7 +903,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\vulkan.c.obj: C_COMPILER
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\window.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\window.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -904,7 +912,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\window.c.obj: C_COMPILER
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\egl_context.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\egl_context.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -913,7 +921,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\egl_context.c.obj: C_COM
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\osmesa_context.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\osmesa_context.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -922,7 +930,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\osmesa_context.c.obj: C_
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\null_init.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\null_init.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -931,7 +939,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\null_init.c.obj: C_COMPI
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\null_monitor.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\null_monitor.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -940,7 +948,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\null_monitor.c.obj: C_CO
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\null_window.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\null_window.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -949,7 +957,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\null_window.c.obj: C_COM
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\null_joystick.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\null_joystick.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -958,7 +966,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\null_joystick.c.obj: C_C
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_module.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\win32_module.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -967,7 +975,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_module.c.obj: C_CO
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_time.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\win32_time.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -976,7 +984,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_time.c.obj: C_COMP
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_thread.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\win32_thread.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -985,7 +993,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_thread.c.obj: C_CO
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_init.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\win32_init.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -994,7 +1002,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_init.c.obj: C_COMP
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_joystick.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\win32_joystick.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -1003,7 +1011,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_joystick.c.obj: C_
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_monitor.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\win32_monitor.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -1012,7 +1020,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_monitor.c.obj: C_C
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_window.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\win32_window.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -1021,7 +1029,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_window.c.obj: C_CO
 
 build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\wgl_context.c.obj: C_COMPILER__glfw_Debug _deps\glfw_external-src\src\wgl_context.c || cmake_object_order_depends_target_glfw
   DEFINES = -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_WIN32 -D_UNICODE
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd /W3
   INCLUDES = -I_deps\glfw_external-src\include -I_deps\glfw_external-src\src -I_deps\glfw_external-build\src
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   OBJECT_FILE_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
@@ -1037,7 +1045,7 @@ build _deps\glfw_external-build\src\CMakeFiles\glfw.dir\wgl_context.c.obj: C_COM
 # Link the static library _deps\glfw_external-build\src\glfw3.lib
 
 build _deps\glfw_external-build\src\glfw3.lib: C_STATIC_LIBRARY_LINKER__glfw_Debug _deps\glfw_external-build\src\CMakeFiles\glfw.dir\context.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\init.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\input.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\monitor.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\platform.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\vulkan.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\window.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\egl_context.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\osmesa_context.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\null_init.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\null_monitor.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\null_window.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\null_joystick.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_module.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_time.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_thread.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_init.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_joystick.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_monitor.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\win32_window.c.obj _deps\glfw_external-build\src\CMakeFiles\glfw.dir\wgl_context.c.obj
-  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1
+  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 -MDd
   LINK_FLAGS = /machine:x64
   OBJECT_DIR = _deps\glfw_external-build\src\CMakeFiles\glfw.dir
   POST_BUILD = cd .
@@ -1116,7 +1124,7 @@ build _deps\glfw_external-build\src\CMakeFiles\update_mappings: CUSTOM_COMMAND
 build cmake_object_order_depends_target_tinyobjloader: phony || _deps\tinyobjloader_external-build\CMakeFiles\tinyobjloader.dir
 
 build _deps\tinyobjloader_external-build\CMakeFiles\tinyobjloader.dir\tiny_obj_loader.cc.obj: CXX_COMPILER__tinyobjloader_Debug _deps\tinyobjloader_external-src\tiny_obj_loader.cc || cmake_object_order_depends_target_tinyobjloader
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd
   OBJECT_DIR = _deps\tinyobjloader_external-build\CMakeFiles\tinyobjloader.dir
   OBJECT_FILE_DIR = _deps\tinyobjloader_external-build\CMakeFiles\tinyobjloader.dir
   TARGET_COMPILE_PDB = _deps\tinyobjloader_external-build\CMakeFiles\tinyobjloader.dir\tinyobjloader.pdb
@@ -1131,7 +1139,7 @@ build _deps\tinyobjloader_external-build\CMakeFiles\tinyobjloader.dir\tiny_obj_l
 # Link the static library _deps\tinyobjloader_external-build\tinyobjloader.lib
 
 build _deps\tinyobjloader_external-build\tinyobjloader.lib: CXX_STATIC_LIBRARY_LINKER__tinyobjloader_Debug _deps\tinyobjloader_external-build\CMakeFiles\tinyobjloader.dir\tiny_obj_loader.cc.obj
-  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd
   LINK_FLAGS = /machine:x64
   OBJECT_DIR = _deps\tinyobjloader_external-build\CMakeFiles\tinyobjloader.dir
   POST_BUILD = cd .
@@ -1196,7 +1204,7 @@ build _deps\tinyobjloader_external-build\list_install_components: phony
 # =============================================================================
 # Target aliases.
 
-build Eksamensengine: phony Eksamensengine.exe
+build Eksamen: phony Eksamen.exe
 
 build glad: phony external\glad\glad.lib
 
@@ -1234,7 +1242,7 @@ build update_mappings: phony _deps\glfw_external-build\src\update_mappings
 #############################################
 # Folder: C:/Users/oleel/Documents/SKOLE/semester_1/Grafprog/eksamensforberedelser/eksamensengine/out/build/x64-Debug
 
-build all: phony Eksamensengine.exe copy_shaders external\all
+build all: phony Eksamen.exe copy_shaders external\all
 
 # =============================================================================
 

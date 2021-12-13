@@ -13,6 +13,7 @@ class game {
 private: 
 	RenderHandler* renderHandler;
 	ImguiHandler ui;
+	bool buttonPressed;
 
 	float deltaTime;
 	float lastFrame;

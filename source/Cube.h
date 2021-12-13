@@ -9,7 +9,7 @@
 class Cube {
 public:
     glm::vec3 pointLightPositions[2] = {
-        glm::vec3(0.7f,  0.2f,  2.0f),
+        glm::vec3(2.5f,  2.5f,  5.0f),
         glm::vec3(0.7f,  0.2f,  2.0f)
     };
 

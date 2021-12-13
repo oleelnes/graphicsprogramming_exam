@@ -89,7 +89,6 @@ unsigned int Cube::createCustomLightCube(float length, float height, float depth
 		else if (i % 8 == 2) {
 			tempArray[i] = (cube_vertices[i] * depth) + depthOffset;
 		}
-		//TODO: try putting else if on the two above and simply else on this one instead.
 		else {
 			tempArray[i] = cube_vertices[i];
 		}
@@ -103,43 +102,11 @@ unsigned int Cube::createCustomLightCube(float length, float height, float depth
 	glBindVertexArray(tempVAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 288 * 2, &tempArray[0], GL_STATIC_DRAW);
-	//Position attributes -> no norm or tex attributes here!
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 288 , &tempArray[0], GL_STATIC_DRAW);
+
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	for (int i = 0; i < 288; i++) {
-		if (i % 8 == 0) {
-			tempArray[i] = (cube_vertices[i] * length) + lengthOffset + 2.0f;
-		}
-		else if (i % 8 == 1) {
-			tempArray[i] = (cube_vertices[i] * height) + heightOffset + 2.0f;
-		}
-		else if (i % 8 == 2) {
-			tempArray[i] = (cube_vertices[i] * depth) + depthOffset + 2.0f;
-		}
-		//TODO: try putting else if on the two above and simply else on this one instead.
-		else {
-			tempArray[i] = cube_vertices[i];
-		}
-	}
-
-	//unsigned int VBOto;
-
-	//glGenBuffers(1, &VBOto);
-	//glBindVertexArray(tempVAO);
-
-	//glBindBuffer(GL_ARRAY_BUFFER, VBOto);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 288, tempArray, GL_STATIC_DRAW);
-	//Position attributes -> no norm or tex attributes here!
-	glBufferSubData(GL_ARRAY_BUFFER, sizeof(float) * 288 * 1, sizeof(float) * 288, &tempArray[0]);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	
-
-	
-
 
 	return tempVAO;
 }
@@ -236,7 +203,7 @@ unsigned int Cube::createCubeTunnel(int x_stride, int y_stride, int z_stride)
 		}
 	}
 
-	std::cout << "vertices: " << tempVec.size() << std::endl;
+	//std::cout << "entries: " << tempVec.size() << std::endl;
 
 	unsigned int tunnel_VAO;
 	glGenVertexArrays(1, &tunnel_VAO);
