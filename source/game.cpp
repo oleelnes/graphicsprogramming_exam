@@ -26,8 +26,11 @@ void game::run(){
 	ImGui_ImplOpenGL3_Init("#version 430 core");
 	
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDepthFunc(GL_LESS);
+	//glfwWindowHint(GLFW_SAMPLES, 12);
+	glEnable(GL_MULTISAMPLE);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	deltaTime = 0.0f;
 	lastFrame = 0.0f;
 

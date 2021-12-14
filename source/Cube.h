@@ -16,6 +16,7 @@ public:
     GLuint load_opengl_texture(const std::string& filepath);
     GLuint gridTexture;
     GLuint activeBlockTexture;
+    GLuint inactiveTexture;
     Shader* shader = new Shader("resources/shaders/triangle.vs", "resources/shaders/triangle.fs");
     Shader* lightCubeShader = new Shader("resources/shaders/light_cube.vs", "resources/shaders/light_cube.fs");
     unsigned int cubeVAO;

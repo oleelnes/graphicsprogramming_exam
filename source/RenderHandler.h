@@ -19,7 +19,7 @@ private:
 	int activeBlock_y;
 	float activeBlock_z;
 	float speed;
-	int grid[11 * 5 * 5];
+	int grid[12 * 5 * 5];
 	std::vector<inactiveBlocksVertices> inactiveBlockVertices;
 
 	bool activeBlockIsMoving; //when true it makes it so that player cannot rotate or move it anymore!
@@ -43,10 +43,12 @@ private:
 	glm::vec3 cameraFront;
 	glm::vec3 cameraUp;
 
-
+	bool staticActiveBlockCollision(int key);
+	int getGridXLoc();
+	int getGridYLoc();
 	void renderInactiveBlock();
 	void moveActiveBlock();
-	bool activeBlockCollision();
+	bool movingActiveBlockCollision();
 	void newActiveBlock();
 	void init();
 	void projectionInit();

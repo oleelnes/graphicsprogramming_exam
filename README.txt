@@ -1,12 +1,14 @@
-Version 0.2 
+Version 0.4 
 
-Date: 13/12/2021
-Time: 21:23 
+Date: 14/12/2021
+Time: 12:53 
 
-New in version 0.3: 
-* Collision functionality between bottom of pit / other inactive blocks and active block added.
-* Textures added.
-* Some minor code improvements.
+New in version 0.4: 
+* Collision mechanics fully developed
+* Fullscreen added
+* Started writing down sources
+* Texture for inactive blocks added
+* Minor code improvements
 
 
 How to run (visual studio): 
@@ -32,4 +34,12 @@ Space: Move block
 VERSIONS:
 0.1: The general layout of the level has been added. 
 0.2: Active block has been added but not completed; lighting improved.
-0.3: Current version
+0.3: 2 textures added (self-drawn); collision mechanics under development; minor code improvements
+0.4: Current version (See "new in version 0.4")
+
+
+SOURCES:
+1. Shader.h and Shader.cpp: 
+Accessed 17.11.2021. Available at: https://learnopengl.com/code_viewer_gh.php?code=includes/learnopengl/shader_s.h 
+Also avaiable at: https://learnopengl.com/Getting-started/Shaders
+(Not an identical copy, but mostly made by strictly following the steps)

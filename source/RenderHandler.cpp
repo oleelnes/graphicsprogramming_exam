@@ -23,15 +23,12 @@ RenderHandler::RenderHandler(){
 	activeBlock_x = 0;
 	activeBlock_y = 0;
 	activeBlock_z = 0;
-	for (int i = 0; i < (11 * 5 * 5); i++) {
-		if (i < 250)
+	for (int i = 0; i < (11 * 5 * 5) + 25; i++) {
+		if (i <= 250)
 			grid[i] = 0;
 		else
 			grid[i] = 1;
 	}
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	inactiveBlockVertices.push_back({});
 	auto& vertex = inactiveBlockVertices.back();
 	//vertex.index = 1;
@@ -89,19 +86,21 @@ void RenderHandler::init(){
 
 
 void RenderHandler::keyInput(int key, float speed){
-
+	if (staticActiveBlockCollision(key)) std::cout << "collision" << std::endl;
 	//up
-	if (key == 0 && !activeBlockIsMoving)
-		activeBlock_y += 1;
-	//down
-	if (key == 1 && !activeBlockIsMoving)
-		activeBlock_y -= 1;
-	//left
-	if (key == 2 && !activeBlockIsMoving)
-		activeBlock_x += 1;
-	//right
-	if (key == 3 && !activeBlockIsMoving)
-		activeBlock_x -= 1;
+	else {
+		if (key == 0 && !activeBlockIsMoving)
+			activeBlock_y += 1;
+		//down
+		if (key == 1 && !activeBlockIsMoving)
+			activeBlock_y -= 1;
+		//left
+		if (key == 2 && !activeBlockIsMoving)
+			activeBlock_x += 1;
+		//right
+		if (key == 3 && !activeBlockIsMoving)
+			activeBlock_x -= 1;
+	}
 	//space:
 	if (key == 4) {
 		activeBlockIsMoving = true;
@@ -135,7 +134,6 @@ void RenderHandler::renderActiveBlock(){
 	glBindVertexArray(blocksVAO);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, cube->activeBlockTexture);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	model = glm::translate(model, glm::vec3(activeBlock_x, activeBlock_y, activeBlock_z));
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -214,7 +212,7 @@ void RenderHandler::projectionInit() {
 	//projection * view * model * aPos -> these three initiations could possibly be elsewhere
 	model = glm::mat4(1.0f);
 	view = glm::mat4(1.0f);
-	projection = glm::perspective(glm::radians(85.0f), 800.0f / 800.0f, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(85.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
 
 	//levelShader uniform locations
 	modelLoc = cube->shader->getUniformLoc("model");
@@ -226,8 +224,7 @@ void RenderHandler::projectionInit() {
 }
 
 void RenderHandler::moveActiveBlock(){
-
-	if(!activeBlockCollision())
+	if(!movingActiveBlockCollision())
 		activeBlock_z += 2.5 * speed;
 	else {
 		//std::cout << "moving block stopped" << std::endl;
@@ -236,15 +233,14 @@ void RenderHandler::moveActiveBlock(){
 	}
 }
 
-bool RenderHandler::activeBlockCollision()
-{
+bool RenderHandler::movingActiveBlockCollision(){
 	int temp_z = activeBlock_z;
 	int grid_x = activeBlock_x + 3;
 	int grid_y = activeBlock_y + 2;
 	int gridLocation = (temp_z * 25) + ((grid_y - 1) * 5) + grid_x;
-	if (grid[gridLocation + 25] == 1 && gridLocation < 275 - 25) {
+	if (grid[gridLocation + 25] == 1 && gridLocation < 275 - 23) {
 		grid[gridLocation] = 1;
-		//std::cout << "collision at gridloc: " << gridLocation << std::endl;
+		std::cout << "collision with gridloc: " << gridLocation + 25 << std::endl;
 		return true;
 	}
 	else 
@@ -267,12 +263,43 @@ void RenderHandler::newActiveBlock(){
 	inactive = true;
 }
 
+bool RenderHandler::staticActiveBlockCollision(int key)
+{
+	int grid_x = getGridXLoc();
+	int grid_y = getGridYLoc();
+	switch (key) {
+	case 0:
+		if (grid_y >= 5) return true;
+		else return false;
+		break;
+	case 1:
+		if (grid_y <= 1) return true;
+		else return false;
+		break;
+
+	case 2:
+		if (grid_x >= 5) return true;
+		else return false;
+		break;
+
+	case 3:
+		if (grid_x <= 1) return true;
+		else return false;
+		break;
+
+	default:
+		std::cout << "not collision causing input " << std::endl;
+		break;
+	}
+	return false;
+}
+
 void RenderHandler::renderInactiveBlock(){
 	cube->shader->use();
 	
 	glBindVertexArray(inactiveVAO);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, cube->gridTexture);
+	glBindTexture(GL_TEXTURE_2D, cube->inactiveTexture);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//model = glm::translate(model, glm::vec3(activeBlock_x, activeBlock_y, activeBlock_z));
 	//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -290,19 +317,32 @@ void RenderHandler::renderInactiveBlock(){
 
 }
 
+int RenderHandler::getGridXLoc()
+{
+	int grid_x = activeBlock_x + 3;
+	return grid_x;
+}
+
+int RenderHandler::getGridYLoc()
+{
+	int grid_y = activeBlock_y + 2;
+	return grid_y;
+}
+
+
 void RenderHandler::updateSpeed(float gamespeed){
 	speed = gamespeed;
 }
 
 void RenderHandler::cameraInit() {
-	cameraPos = glm::vec3(2.5f, 2.5f, -2.8f);
-	cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+	cameraPos = glm::vec3(1.68f, 2.5f, -2.74f);
+	cameraFront = glm::vec3(0.0f, 0.0f, 0.0f);
 	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 }
 
 void RenderHandler::transformations() {
 	// view/projection transformations
-	projection = glm::perspective(glm::radians(85.0f), 800.0f / 800.0f, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(85.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
 	view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	cube->shader->setMat4("projection", projection);
 	cube->shader->setMat4("view", view);

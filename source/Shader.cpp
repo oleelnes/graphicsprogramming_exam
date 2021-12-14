@@ -1,7 +1,7 @@
 #include "Shader.h"
 
 /*
-    Shader class -- made by following and heavily inspired by LearnOpenGl.com's tutorial on shaders
+    Shader class -- made by following and heavily inspired by LearnOpenGl.com's tutorial on shaders. See source 1.
 
 */
 

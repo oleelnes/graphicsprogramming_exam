@@ -86,6 +86,8 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/grid_tile.png
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/active_block_tile.png
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/inactive_tile.png
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
 
 
      # Enable C++ 17

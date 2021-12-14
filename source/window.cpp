@@ -5,8 +5,10 @@ window::window(){
 }
 
 void window::windowCreator(){
-	winWindow = glfwCreateWindow(800, 800, "Exam!!", NULL, NULL);
-	glfwSetWindowAspectRatio(winWindow, 28, 28);
+	glfwWindowHint(GLFW_SAMPLES, 4);
+	//glEnable(GL_MULTISAMPLE);
+	winWindow = glfwCreateWindow(1920, 1080, "Block", glfwGetPrimaryMonitor(), NULL);
+	glfwSetWindowAspectRatio(winWindow, 16, 9);
 
 	glfwMakeContextCurrent(winWindow);
 	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);

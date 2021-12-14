@@ -9,10 +9,11 @@ struct Vertex {
 Cube::Cube(){
 	//glGenVertexArrays(1, &cubeVAO);
 	//createCubeVAO();
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	gridTexture = load_opengl_texture("resources/textures/grid_tile.png");
 	activeBlockTexture = load_opengl_texture("resources/textures/active_block_tile.png");
+	inactiveTexture = load_opengl_texture("resources/textures/inactive_tile.png");
 }
 
 void Cube::createCubeVAO(){

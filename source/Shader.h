@@ -26,8 +26,8 @@ public:
 	void setVec3(const std::string& name, float x, float y, float z) const;
 	void setMat4(const std::string& name, const glm::mat4& mat) const;
 	unsigned int getUniformLoc(const std::string& name);
-	void checkCompileErrors(unsigned int shader, std::string type);
 private:
+	void checkCompileErrors(unsigned int shader, std::string type);
 };
 
 #endif
