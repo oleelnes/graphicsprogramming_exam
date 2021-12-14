@@ -83,22 +83,6 @@ build CMakeFiles\Eksamen.dir\source\RenderHandler.cpp.obj: CXX_COMPILER__Eksamen
   TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
   TARGET_PDB = Eksamen.pdb
 
-build CMakeFiles\Eksamen.dir\source\Menu.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\Menu.cpp || cmake_object_order_depends_target_Eksamen
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
-  INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamen.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
-  TARGET_PDB = Eksamen.pdb
-
-build CMakeFiles\Eksamen.dir\source\Overlay.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\Overlay.cpp || cmake_object_order_depends_target_Eksamen
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
-  INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
-  OBJECT_DIR = CMakeFiles\Eksamen.dir
-  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source
-  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
-  TARGET_PDB = Eksamen.pdb
-
 build CMakeFiles\Eksamen.dir\source\Cube.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\Cube.cpp || cmake_object_order_depends_target_Eksamen
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
@@ -116,6 +100,14 @@ build CMakeFiles\Eksamen.dir\source\ImguiHandler.cpp.obj: CXX_COMPILER__Eksamen_
   TARGET_PDB = Eksamen.pdb
 
 build CMakeFiles\Eksamen.dir\source\Block.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\Block.cpp || cmake_object_order_depends_target_Eksamen
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
+  INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
+  OBJECT_DIR = CMakeFiles\Eksamen.dir
+  OBJECT_FILE_DIR = CMakeFiles\Eksamen.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\Eksamen.dir\
+  TARGET_PDB = Eksamen.pdb
+
+build CMakeFiles\Eksamen.dir\source\TextureLoader.cpp.obj: CXX_COMPILER__Eksamen_Debug ..\..\..\source\TextureLoader.cpp || cmake_object_order_depends_target_Eksamen
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -std:c++17
   INCLUDES = -I..\..\..\source -I..\..\..\stb\include -I..\..\..\external\glad\glad\include -I_deps\glfw_external-src\include -I_deps\glm_external-src -I_deps\tinyobjloader_external-src -I..\..\..\external\stb\include
   OBJECT_DIR = CMakeFiles\Eksamen.dir
@@ -179,7 +171,7 @@ build CMakeFiles\Eksamen.dir\source\imgui\imgui_widgets.cpp.obj: CXX_COMPILER__E
 #############################################
 # Link the executable Eksamen.exe
 
-build Eksamen.exe: CXX_EXECUTABLE_LINKER__Eksamen_Debug CMakeFiles\Eksamen.dir\source\main.cpp.obj CMakeFiles\Eksamen.dir\source\window.cpp.obj CMakeFiles\Eksamen.dir\source\game.cpp.obj CMakeFiles\Eksamen.dir\source\Shader.cpp.obj CMakeFiles\Eksamen.dir\source\RenderHandler.cpp.obj CMakeFiles\Eksamen.dir\source\Menu.cpp.obj CMakeFiles\Eksamen.dir\source\Overlay.cpp.obj CMakeFiles\Eksamen.dir\source\Cube.cpp.obj CMakeFiles\Eksamen.dir\source\ImguiHandler.cpp.obj CMakeFiles\Eksamen.dir\source\Block.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_demo.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_draw.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_impl_glfw.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_impl_opengl3.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_widgets.cpp.obj | external\glad\glad.lib _deps\glfw_external-build\src\glfw3.lib _deps\tinyobjloader_external-build\tinyobjloader.lib external\stb\stbimage.lib || _deps\glfw_external-build\src\glfw3.lib _deps\tinyobjloader_external-build\tinyobjloader.lib external\glad\glad.lib external\stb\stbimage.lib
+build Eksamen.exe: CXX_EXECUTABLE_LINKER__Eksamen_Debug CMakeFiles\Eksamen.dir\source\main.cpp.obj CMakeFiles\Eksamen.dir\source\window.cpp.obj CMakeFiles\Eksamen.dir\source\game.cpp.obj CMakeFiles\Eksamen.dir\source\Shader.cpp.obj CMakeFiles\Eksamen.dir\source\RenderHandler.cpp.obj CMakeFiles\Eksamen.dir\source\Cube.cpp.obj CMakeFiles\Eksamen.dir\source\ImguiHandler.cpp.obj CMakeFiles\Eksamen.dir\source\Block.cpp.obj CMakeFiles\Eksamen.dir\source\TextureLoader.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_demo.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_draw.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_impl_glfw.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_impl_opengl3.cpp.obj CMakeFiles\Eksamen.dir\source\imgui\imgui_widgets.cpp.obj | external\glad\glad.lib _deps\glfw_external-build\src\glfw3.lib _deps\tinyobjloader_external-build\tinyobjloader.lib external\stb\stbimage.lib || _deps\glfw_external-build\src\glfw3.lib _deps\tinyobjloader_external-build\tinyobjloader.lib external\glad\glad.lib external\stb\stbimage.lib
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = external\glad\glad.lib  _deps\glfw_external-build\src\glfw3.lib  _deps\tinyobjloader_external-build\tinyobjloader.lib  external\stb\stbimage.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib

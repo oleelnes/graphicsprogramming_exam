@@ -11,9 +11,9 @@ Cube::Cube(){
 	//createCubeVAO();
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	gridTexture = load_opengl_texture("resources/textures/grid_tile.png");
-	activeBlockTexture = load_opengl_texture("resources/textures/active_block_tile.png");
-	inactiveTexture = load_opengl_texture("resources/textures/inactive_tile.png");
+	//gridTexture = load_opengl_texture("resources/textures/grid_tile.png");
+	//activeBlockTexture = load_opengl_texture("resources/textures/active_block_tile.png");
+	//inactiveTexture = load_opengl_texture("resources/textures/inactive_tile.png");
 }
 
 void Cube::createCubeVAO(){
@@ -210,7 +210,7 @@ unsigned int Cube::createCubeTunnel(int x_stride, int y_stride, int z_stride)
 
 	//std::cout << "entries: " << tempVec.size() << std::endl;
 
-	std::cout << "tempvec location 3 x: " << tempVec[1].location.x << std::endl;
+	//std::cout << "tempvec location 3 x: " << tempVec[1].location.x << std::endl;
 
 
 	unsigned int tunnel_VAO;

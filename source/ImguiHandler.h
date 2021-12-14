@@ -23,7 +23,7 @@ public:
 	gameState pausemenu() { return gameState::PAUSEMENU; }
 	gameState gameovermenu() { return gameState::GAMEOVERMENU; }
 	gameState endgame() { return gameState::ENDGAME; }
-	void inGameStats(int score, int health);
+	void inGameStats(int score, int layer, float time);
 	void mainMenu();
 	void closeImgui();
 	bool detectEnterPress();

@@ -3,7 +3,7 @@
 
 
 Block::Block(){
-	glGenVertexArrays(1, &inactiveVAO);
+//nothing yet
 }
 
 unsigned int Block::newActiveBlock(int type, float loc_x, float loc_y, float loc_z){
@@ -36,8 +36,10 @@ unsigned int Block::newActiveBlock(int type, float loc_x, float loc_y, float loc
 	return activeBlockVAO;
 }
 
-void Block::activeToInactive(int vertices, int x, int y, int z)
+unsigned int Block::activeToInactive(int vertices, int x, int y, int z)
 {
+	//glDeleteVertexArrays(1, &inactiveVAO);
+	
 	for (int v = 0; v < vertices; v++) {
 		inactiveBlocks.push_back({});
 		auto& vertex = inactiveBlocks.back();
@@ -45,12 +47,14 @@ void Block::activeToInactive(int vertices, int x, int y, int z)
 		vertex.location = { activeBlock[v].location.x + x, activeBlock[v].location.y + y, activeBlock[v].location.z + z };
 		vertex.normals = activeBlock[v].normals;
 		vertex.texCoords = activeBlock[v].texCoords;
-		std::cout << "inactive vertex " << v << " location: " << inactiveBlocks[v].location.x << std::endl;
+		//std::cout << "inactive vertex " << v << " location: " << inactiveBlocks[v].location.x << std::endl;
 	}
+	unsigned int solidBlockVAO;
+	glGenVertexArrays(1, &solidBlockVAO);
 	unsigned int VBO;
 
 	glGenBuffers(1, &VBO);
-	glBindVertexArray(inactiveVAO);
+	glBindVertexArray(solidBlockVAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(BlockVertex) * inactiveBlocks.size(), inactiveBlocks.data(), GL_STATIC_DRAW);
@@ -61,11 +65,9 @@ void Block::activeToInactive(int vertices, int x, int y, int z)
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(BlockVertex), (void*)offsetof(BlockVertex, texCoords));
 	glEnableVertexAttribArray(2);
 
+	return solidBlockVAO;
 }
 
-unsigned int Block::getInactiveBlocksVAO()
-{
-	return inactiveVAO;
-}
+
 
 

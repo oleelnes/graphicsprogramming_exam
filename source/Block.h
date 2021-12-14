@@ -12,6 +12,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <set>
 
 struct BlockVertex {
     glm::vec3 location;
@@ -25,11 +26,10 @@ public:
     std::vector<BlockVertex> inactiveBlocks{};
     std::vector<BlockVertex> activeBlock{};
     unsigned int newActiveBlock(int type, float loc_x, float loc_y, float loc_z);
-    void activeToInactive(int vertices, int x, int y, int z);
-    unsigned int getInactiveBlocksVAO();
-    unsigned int inactiveVAO;
+    unsigned int activeToInactive(int vertices, int x, int y, int z);
    // unsigned int activeBlock(int type);
 private:
+
     float cube_vertices[288]{
         //----position---- ------normal------ --texture-- 
     0.0f, 0.0f, 0.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, //bak

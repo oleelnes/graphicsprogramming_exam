@@ -26,12 +26,13 @@ target_sources(
     "source/Externs.h" 
     "source/RenderHandler.cpp" 
     "source/RenderHandler.h" 
-    "source/Menu.cpp" 
-    "source/Menu.h" 
-    "source/Overlay.cpp" 
-    "source/Overlay.h" "source/Cube.cpp" "source/Cube.h" 
+     
+     
+     
+     "source/Cube.cpp" "source/Cube.h" 
     "source/ImguiHandler.h" "source/ImguiHandler.cpp"
     "source/Block.h" "source/Block.cpp"
+     "source/TextureLoader.cpp" "source/TextureLoader.h"
     
     ${CMAKE_CURRENT_LIST_DIR}/source/imgui/imconfig.h
     ${CMAKE_CURRENT_LIST_DIR}/source/imgui/imgui.cpp
@@ -86,7 +87,34 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/grid_tile.png
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/active_block_tile.png
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/inactive_tile.png
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/layer_1.png
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/layer_10_blue.png
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/layer_9_red.png
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/layer_8_yellow.png
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/layer_7_white.png
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/layer_6_orange.png
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/layer_5_dblue.png
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/layer_4_pink.png
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/layer_3_babyblue.png
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/layer_2_ubrown.png
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
 
 

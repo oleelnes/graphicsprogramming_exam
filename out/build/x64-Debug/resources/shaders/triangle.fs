@@ -36,6 +36,7 @@ uniform float lightLinear;
 uniform float lightQuadratic;
 uniform vec4 u_color = vec4(1.0, 0.0, 0.0, 1.0);
 uniform int withTexture = 0;
+uniform int colManip = 0;
 
 #define NR_POINT_LIGHTS 1
 
@@ -89,6 +90,9 @@ void main(){
     if(withTexture == 0) {
         FragColor = vec4(result, 1.0) * u_color;
         }
+    else if (colManip == 1){
+        FragColor = vec4(result, 1.0) * u_color;
+    }
     else{
         FragColor = vec4(result, 1.0);
     }

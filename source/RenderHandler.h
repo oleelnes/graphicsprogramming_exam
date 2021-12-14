@@ -1,13 +1,25 @@
 #include "Shader.h"
+#include "TextureLoader.h"
 #include "Cube.h"
 #include "Block.h"
 #include <iostream>
 
-struct inactiveBlocksVertices {
+struct InactiveBlocksVertices {
+	int type;
 	int vertices;
+	int layer;
 };
 
 class RenderHandler {
+public:
+	RenderHandler();
+	int render(int gamemode);
+	void renderer();
+	void keyInput(int key, float time);
+	void updateSpeed(float gamespeed);
+	void mouseInput(glm::vec3 direction);
+	//Shader* main_shader = new Shader("resources/shaders/triangle.vs", "resources/shaders/triangle.fs");
+
 private:
 	void renderActiveBlock();
 	unsigned int blocksVAO;
@@ -19,14 +31,18 @@ private:
 	int activeBlock_y;
 	float activeBlock_z;
 	float speed;
+	int solidBlocks;
 	int grid[12 * 5 * 5];
-	std::vector<inactiveBlocksVertices> inactiveBlockVertices;
+	int gridZLoc;
+	std::vector<InactiveBlocksVertices> inactiveBlockVertices;
 
 	bool activeBlockIsMoving; //when true it makes it so that player cannot rotate or move it anymore!
+	int drawcallcounter;
 
 	int gamemode1_state = 0;
 	Cube* cube;
 	Block* block;
+	TextureLoader* texture;
 
 	glm::mat4 model;
 	glm::mat4 activeModel;
@@ -46,7 +62,8 @@ private:
 	bool staticActiveBlockCollision(int key);
 	int getGridXLoc();
 	int getGridYLoc();
-	void renderInactiveBlock();
+	void renderInactiveBlock(int requestedLayer, GLuint& layer);
+	void renderAllSolidBlocks();
 	void moveActiveBlock();
 	bool movingActiveBlockCollision();
 	void newActiveBlock();
@@ -55,12 +72,5 @@ private:
 	void cameraInit();
 	void light();
 	void transformations();
-public:
-	RenderHandler();
-	int render(int gamemode);
-	void renderer();
-	void keyInput(int key, float time);
-	void updateSpeed(float gamespeed);
-	void mouseInput(glm::vec3 direction);
-	//Shader* main_shader = new Shader("resources/shaders/triangle.vs", "resources/shaders/triangle.fs");
+	void setGridZLoc(int currGridLoc);
 };

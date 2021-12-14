@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 
-void ImguiHandler::inGameStats(int score, int health){
+void ImguiHandler::inGameStats(int score, int layer, float time){
 	ImGuiWindowFlags window_flags = 0;					
 	window_flags |= ImGuiWindowFlags_NoMove;
 	window_flags |= ImGuiWindowFlags_NoCollapse;
@@ -12,19 +12,21 @@ void ImguiHandler::inGameStats(int score, int health){
 	window_flags |= ImGuiWindowFlags_NoDecoration;
 
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//	GUI
+	
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-	ImGui::SetNextWindowPos(ImVec2(io.DisplaySize.x * 0.9f, io.DisplaySize.y * 0.65f), \
+	ImGui::SetNextWindowPos(ImVec2(io.DisplaySize.x * 0.9f, io.DisplaySize.y * 0.4f), 
 		ImGuiCond_Always, ImVec2(0.5f, 0.5f));
 
-	std::string pointsBuffer = "Score: " + std::to_string(score);		
-	std::string livesBuffer = "\nLayer: " + std::to_string(health);			
+	std::string timeBuffer = "Descension in: " + std::to_string(time);
+	std::string scoreBuffer = "\nScore: " + std::to_string(score);		
+	std::string layerBuffer = "\nLayer: " + std::to_string(layer);			
 	// display data
-	ImGui::Begin("Stats", NULL, window_flags);
-	ImGui::TextColored(colorBlue, pointsBuffer.c_str());
-	ImGui::TextColored(colorBlue, livesBuffer.c_str());
+	ImGui::Begin("in-game stats", NULL, window_flags);
+	ImGui::TextColored(colorBlue, timeBuffer.c_str());
+	ImGui::TextColored(colorBlue, scoreBuffer.c_str());
+	ImGui::TextColored(colorBlue, layerBuffer.c_str());
 	//ImGui::PushFont()
 	ImGui::SetWindowFontScale(2.0f);
 	ImGui::End();

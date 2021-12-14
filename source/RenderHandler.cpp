@@ -12,6 +12,7 @@
 RenderHandler::RenderHandler(){
 	cube = new Cube();
 	block = new Block();
+	texture = new TextureLoader();
 	cameraInit();
 	projectionInit();
 	//Camera camera(glm::vec3(0.0f, 0.0f, 3.0f)); //initiating the camera. 
@@ -31,8 +32,12 @@ RenderHandler::RenderHandler(){
 	}
 	inactiveBlockVertices.push_back({});
 	auto& vertex = inactiveBlockVertices.back();
-	//vertex.index = 1;
-	vertex.vertices = 0;
+	vertex.type = 0; // what type of block
+	vertex.vertices = 0; // how many vertices to draw
+	vertex.layer = 10; //sentinel key
+	solidBlocks = 0; //counter that is used to access the various entries of the inactiveBlockVertices-vector/solidBlocks-vector
+	gridZLoc = 0;
+	drawcallcounter = 0;
 }
 
 void RenderHandler::renderer(){
@@ -41,40 +46,25 @@ void RenderHandler::renderer(){
 	cube->shader->use();
 	light();
 	transformations();
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	//creating tunnel
 	glBindVertexArray(tunnelVAO);
 	cube->shader->setInt("withTexture", 1);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, cube->gridTexture);
-	glDrawArrays(GL_TRIANGLES, 0, 36*(((5*10)*4)+(5*5)));
+	//glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture->gridTexture);
+	glDrawArrays(GL_TRIANGLES, 0, 6*(((5*10)*4)+(5*5))); //endret til 6
 	glBindVertexArray(0);
 	glUseProgram(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
 	//cube->shader->setInt("withTexture", 0);
 
 
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	//glDrawArrays(GL_TRIANGLES, 0, 36);
+	if (inactive) renderAllSolidBlocks();
 	if (activeBlockIsMoving) moveActiveBlock();
 	renderActiveBlock();
-	if (inactive) renderInactiveBlock();
+	
 
 	glBindVertexArray(0);
-
-	//cube->lightCubeShader->use();
-	//cube->lightCubeShader->setMat4("projection", projection);
-	//cube->lightCubeShader->setMat4("view", view);
-	//cube->lightCubeShader->setMat4("model", model);
-
-	//unsigned int VAO3;
-	//glGenVertexArrays(1, &VAO3);
-	//VAO3 = cube->createCustomLightCube(0.2f, 0.2f, 0.2f, cube->pointLightPositions[0].x, cube->pointLightPositions[0].y, cube->pointLightPositions[0].z);
-	//glBindVertexArray(VAO3);
-	//glDrawArrays(GL_TRIANGLES, 0, 36*2);
-	//glBindVertexArray(0);
-
 
 	glUseProgram(0);
 }
@@ -86,7 +76,7 @@ void RenderHandler::init(){
 
 
 void RenderHandler::keyInput(int key, float speed){
-	if (staticActiveBlockCollision(key)) std::cout << "collision" << std::endl;
+	if (staticActiveBlockCollision(key));//std::cout << "collision" << std::endl;
 	//up
 	else {
 		if (key == 0 && !activeBlockIsMoving)
@@ -105,22 +95,16 @@ void RenderHandler::keyInput(int key, float speed){
 	if (key == 4) {
 		activeBlockIsMoving = true;
 	}
-	int temp_z = activeBlock_z;
-	int grid_x = activeBlock_x + 3;
-	int grid_y = activeBlock_y + 2;
-	int gridLocation = (temp_z * 25) + ((grid_y - 1) * 5) + grid_x;
-	std::cout << "grid location: " << gridLocation << " grid x: " << grid_x << " grid y: " << grid_y << std::endl;
+	//int temp_z = activeBlock_z;
+	//int grid_x = activeBlock_x + 3;
+	//int grid_y = activeBlock_y + 2;
+	//int gridLocation = (temp_z * 25) + ((grid_y - 1) * 5) + grid_x;
+	//std::cout << "grid location: " << gridLocation << " grid x: " << grid_x << " grid y: " << grid_y << std::endl;
 }
 
 void RenderHandler::mouseInput(glm::vec3 direction){
 	cameraFront = glm::normalize(direction);
 }
-
-
-
-
-
-
 
 void RenderHandler::renderActiveBlock(){
 	cube->shader->use();
@@ -130,16 +114,55 @@ void RenderHandler::renderActiveBlock(){
 		blocksVAO = block->newActiveBlock(1, 1.0f, 1.0f, 1.0f);
 		firstActiveBlockCall = false;
 	}
-	
 	glBindVertexArray(blocksVAO);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, cube->activeBlockTexture);
+	//glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture->activeBlockTexture);
 	model = glm::translate(model, glm::vec3(activeBlock_x, activeBlock_y, activeBlock_z));
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glBindVertexArray(0);
 	glUseProgram(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+
+void RenderHandler::renderAllSolidBlocks(){
+	drawcallcounter = 0;
+	renderInactiveBlock(10, texture->layer_10);
+	renderInactiveBlock(9, texture->layer_9);
+	renderInactiveBlock(8, texture->layer_8);
+	renderInactiveBlock(7, texture->layer_7);
+	renderInactiveBlock(6, texture->layer_6);
+	renderInactiveBlock(5, texture->layer_5);
+	renderInactiveBlock(7, texture->layer_4);
+	renderInactiveBlock(6, texture->layer_3);
+	renderInactiveBlock(5, texture->layer_2);
+}
+
+/*
+	This function is called by
+*/
+void RenderHandler::renderInactiveBlock(int requestedLayer, GLuint& layer) {
+	cube->shader->use();
+
+	glBindVertexArray(inactiveVAO);
+	model = glm::mat4(1.0f);
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	glBindTexture(GL_TEXTURE_2D, layer);
+	
+	for (int i = 1; i <= solidBlocks; i++) {
+		if (inactiveBlockVertices[i].layer == requestedLayer) {
+			//std::cout << "requested layer/actual layer: " << inactiveBlockVertices[i].layer << " / " << requestedLayer << std::endl;
+			//glBindTexture(GL_TEXTURE_2D, layer);
+			glDrawArrays(GL_TRIANGLES, inactiveBlockVertices[i - 1].vertices, 36);
+			drawcallcounter++;
+			//std::cout << "drawcalls: " << drawcallcounter << std::endl;
+		}
+	}
+
+	glBindVertexArray(0);
+	glUseProgram(0);
+
 }
 
 //returns int main_state back to game (or whatever .cpp that has a pointer to this class)
@@ -179,6 +202,142 @@ int RenderHandler::render(int gamemode)
 	return 1;
 }
 
+
+void RenderHandler::moveActiveBlock(){
+	if(!movingActiveBlockCollision())
+		activeBlock_z += 5.5 * speed;
+	else {
+		//std::cout << "moving block stopped" << std::endl;
+		newActiveBlock();
+		activeBlock_x = 0;  activeBlock_y = 0; activeBlock_z = 0;
+		activeBlockIsMoving = false;
+	}
+}
+
+bool RenderHandler::movingActiveBlockCollision(){
+	int temp_z = activeBlock_z;
+	int grid_x = activeBlock_x + 3; //TODO: Change these to be equal to getGridLocX() and y
+	int grid_y = activeBlock_y + 2;
+	int gridLocation = (temp_z * 25) + ((grid_y - 1) * 5) + grid_x;
+	if (grid[gridLocation + 25] == 1 && gridLocation < 275 - 23) {
+		grid[gridLocation] = 1;
+		setGridZLoc(gridLocation);
+		//std::cout << "collision with gridloc: " << gridLocation + 25 << std::endl;
+		return true;
+	}
+	else 
+		return false;
+}
+
+/*
+	TODO: make it newActiveBlock(int type) where type corresponds to how many vertices and what type will be added to the inactiveBlockVertices vector
+	This function both resets the active block to its original position AND adds the previous activeBlock to the inactiveBlockVAO in Block.cpp (?)
+*/
+void RenderHandler::newActiveBlock(){
+	blocksVAO = block->newActiveBlock(1, 1.0f, 1.0f, 1.0f);
+	std::cout << "active z: " << activeBlock_z << " gridlocz: " << gridZLoc << std::endl;
+	glDeleteVertexArrays(1, &inactiveVAO);
+	glGenVertexArrays(1, &inactiveVAO);
+	inactiveVAO = block->activeToInactive(36, activeBlock_x, activeBlock_y, activeBlock_z);
+
+	solidBlocks++;
+	inactiveBlockVertices.push_back({});
+	auto& vertex = inactiveBlockVertices.back();
+	vertex.type = 1;
+	vertex.layer = gridZLoc;
+	vertex.vertices = inactiveBlockVertices[solidBlocks - 1].vertices + 36;
+
+	//activeBlock_x = 0;  activeBlock_y = 0; activeBlock_z = 0; //setting the activeBlock locations to 0
+	//std::cout << "inactiveblock vertices: " << inactiveBlockVertices[solidBlocks].vertices << std::endl;
+	std::cout << "vertex layer of solid block " << solidBlocks << " is " << inactiveBlockVertices[solidBlocks].layer << " and solidblocks is: " << solidBlocks << std::endl;
+	std::cout << "vertices at "<< solidBlocks << " is: " << inactiveBlockVertices[solidBlocks].vertices << std::endl;
+	inactive = true;
+}
+
+bool RenderHandler::staticActiveBlockCollision(int key)
+{
+	int grid_x = getGridXLoc();
+	int grid_y = getGridYLoc();
+	switch (key) {
+	case 0:
+		if (grid_y >= 5) return true;
+		else return false;
+		break;
+	case 1:
+		if (grid_y <= 1) return true;
+		else return false;
+		break;
+
+	case 2:
+		if (grid_x >= 5) return true;
+		else return false;
+		break;
+
+	case 3:
+		if (grid_x <= 1) return true;
+		else return false;
+		break;
+
+	default:
+		//std::cout << "not collision causing input " << std::endl;
+		break;
+	}
+	return false;
+}
+
+
+
+int RenderHandler::getGridXLoc()
+{
+	int grid_x = activeBlock_x + 3;
+	return grid_x;
+}
+
+int RenderHandler::getGridYLoc()
+{
+	int grid_y = activeBlock_y + 2;
+	return grid_y;
+}
+
+
+void RenderHandler::setGridZLoc(int currGridLoc){
+	if (currGridLoc <= 275 && currGridLoc > 250) gridZLoc = 11;
+	else if (currGridLoc <= 250 && currGridLoc > 225) gridZLoc = 10;
+	else if (currGridLoc <= 225 && currGridLoc > 200) gridZLoc = 9;
+	else if (currGridLoc <= 200 && currGridLoc > 175) gridZLoc = 8;
+	else if (currGridLoc <= 175 && currGridLoc > 150) gridZLoc = 7;
+	else if (currGridLoc <= 150 && currGridLoc > 125) gridZLoc = 6;
+	else if (currGridLoc <= 125 && currGridLoc > 100) gridZLoc = 5;
+	else if (currGridLoc <= 100 && currGridLoc > 75) gridZLoc = 4;
+	else if (currGridLoc <= 75 && currGridLoc > 50) gridZLoc = 3;
+	else if (currGridLoc <= 50 && currGridLoc > 25) gridZLoc = 2;
+	else if (currGridLoc <= 25 && currGridLoc > 0) gridZLoc = 1;
+	std::cout << "grid location " << currGridLoc << " gave us a gridZLoc of " << gridZLoc << std::endl;
+}
+
+
+void RenderHandler::updateSpeed(float gamespeed){
+	speed = gamespeed;
+}
+
+void RenderHandler::cameraInit() {
+	cameraPos = glm::vec3(1.68f, 2.5f, -2.74f);
+	cameraFront = glm::vec3(0.0f, 0.0f, 0.0f);
+	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+}
+
+void RenderHandler::transformations() {
+	// view/projection transformations
+	projection = glm::perspective(glm::radians(85.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
+	view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+	cube->shader->setMat4("projection", projection);
+	cube->shader->setMat4("view", view);
+
+	// world transformation
+	model = glm::mat4(1.0f);
+	//model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	cube->shader->setMat4("model", model);
+}
 void RenderHandler::light()
 {
 	cube->shader->setVec3("lightPosition", cameraPos.x, cameraPos.y, cameraPos.z);
@@ -221,134 +380,4 @@ void RenderHandler::projectionInit() {
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 	projectionLoc = cube->shader->getUniformLoc("projection");
 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
-}
-
-void RenderHandler::moveActiveBlock(){
-	if(!movingActiveBlockCollision())
-		activeBlock_z += 2.5 * speed;
-	else {
-		//std::cout << "moving block stopped" << std::endl;
-		newActiveBlock();
-		activeBlockIsMoving = false;
-	}
-}
-
-bool RenderHandler::movingActiveBlockCollision(){
-	int temp_z = activeBlock_z;
-	int grid_x = activeBlock_x + 3;
-	int grid_y = activeBlock_y + 2;
-	int gridLocation = (temp_z * 25) + ((grid_y - 1) * 5) + grid_x;
-	if (grid[gridLocation + 25] == 1 && gridLocation < 275 - 23) {
-		grid[gridLocation] = 1;
-		std::cout << "collision with gridloc: " << gridLocation + 25 << std::endl;
-		return true;
-	}
-	else 
-		return false;
-}
-
-void RenderHandler::newActiveBlock(){
-	block->activeToInactive(36, activeBlock_x, activeBlock_y, activeBlock_z);
-	inactiveVAO = block->getInactiveBlocksVAO();
-	blocksVAO = block->newActiveBlock(1, 1.0f, 1.0f, 1.0f);
-	//inactiveBlockVertices
-	inactiveBlockVertices.push_back({});
-	auto& vertex = inactiveBlockVertices.back();
-	activeBlock_x = 0;
-	activeBlock_y = 0;
-	activeBlock_z = 0;
-	//vertex.index = 1;
-	vertex.vertices = 36;
-	std::cout << "inactiveblock vertices: " << inactiveBlockVertices[0].vertices << std::endl;
-	inactive = true;
-}
-
-bool RenderHandler::staticActiveBlockCollision(int key)
-{
-	int grid_x = getGridXLoc();
-	int grid_y = getGridYLoc();
-	switch (key) {
-	case 0:
-		if (grid_y >= 5) return true;
-		else return false;
-		break;
-	case 1:
-		if (grid_y <= 1) return true;
-		else return false;
-		break;
-
-	case 2:
-		if (grid_x >= 5) return true;
-		else return false;
-		break;
-
-	case 3:
-		if (grid_x <= 1) return true;
-		else return false;
-		break;
-
-	default:
-		std::cout << "not collision causing input " << std::endl;
-		break;
-	}
-	return false;
-}
-
-void RenderHandler::renderInactiveBlock(){
-	cube->shader->use();
-	
-	glBindVertexArray(inactiveVAO);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, cube->inactiveTexture);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	//model = glm::translate(model, glm::vec3(activeBlock_x, activeBlock_y, activeBlock_z));
-	//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-	model = glm::mat4(1.0f);
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-	for (int i = 0; i < inactiveBlockVertices.size() - 1; i++) {
-		//glDrawArrays(GL_TRIANGLES, inactiveBlockVertices[i].vertices, inactiveBlockVertices[i + 1].vertices);
-		glDrawArrays(GL_TRIANGLES, 0, 36 * 40);
-	}
-	//light();
-	//transformations();
-	glBindVertexArray(0);
-	glUseProgram(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-}
-
-int RenderHandler::getGridXLoc()
-{
-	int grid_x = activeBlock_x + 3;
-	return grid_x;
-}
-
-int RenderHandler::getGridYLoc()
-{
-	int grid_y = activeBlock_y + 2;
-	return grid_y;
-}
-
-
-void RenderHandler::updateSpeed(float gamespeed){
-	speed = gamespeed;
-}
-
-void RenderHandler::cameraInit() {
-	cameraPos = glm::vec3(1.68f, 2.5f, -2.74f);
-	cameraFront = glm::vec3(0.0f, 0.0f, 0.0f);
-	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-}
-
-void RenderHandler::transformations() {
-	// view/projection transformations
-	projection = glm::perspective(glm::radians(85.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
-	view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-	cube->shader->setMat4("projection", projection);
-	cube->shader->setMat4("view", view);
-
-	// world transformation
-	model = glm::mat4(1.0f);
-	//model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	cube->shader->setMat4("model", model);
 }

@@ -26,9 +26,9 @@ void game::run(){
 	ImGui_ImplOpenGL3_Init("#version 430 core");
 	
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
+	//glDepthFunc(GL_ALWAYS);
 	//glfwWindowHint(GLFW_SAMPLES, 12);
-	glEnable(GL_MULTISAMPLE);
+	//glEnable(GL_MULTISAMPLE);
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	deltaTime = 0.0f;
@@ -68,7 +68,7 @@ void game::run(){
 			//main_state = renderHandler->render(gamemode); //gamemode has been decided in case 0/menu
 			glfwSetInputMode(gameWindow->winWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 			renderHandler->renderer();
-			ui.inGameStats(1, 2);
+			ui.inGameStats(1, 2, 7.0f);
 			break;
 		case 2:
 			std::cout << "game will now exit!\tmain_state: " << main_state << " gamemode: " << gamemode << std::endl;
@@ -100,28 +100,28 @@ void game::input()
 		
 	}
 	float cameraSpeed = 2.5 * deltaTime;
-	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_W) == GLFW_PRESS && !buttonPressed) {
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_UP) == GLFW_PRESS && !buttonPressed) {
 		buttonPressed = true;
 		renderHandler->keyInput(0, cameraSpeed);
 	}
-	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_S) == GLFW_PRESS && !buttonPressed) {
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_DOWN) == GLFW_PRESS && !buttonPressed) {
 
 		buttonPressed = true;
 		renderHandler->keyInput(1, cameraSpeed);
 	}
-	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_A) == GLFW_PRESS && !buttonPressed) {
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_LEFT) == GLFW_PRESS && !buttonPressed) {
 		buttonPressed = true;
 		renderHandler->keyInput(2, cameraSpeed);
 
 	}
-	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_D) == GLFW_PRESS && !buttonPressed) {
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_RIGHT) == GLFW_PRESS && !buttonPressed) {
 		buttonPressed = true;
 		renderHandler->keyInput(3, cameraSpeed);
 	}
 
 
-	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_W) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_S) != GLFW_PRESS &&
-		glfwGetKey(gameWindow->winWindow, GLFW_KEY_A) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_D) != GLFW_PRESS)
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_UP) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_DOWN) != GLFW_PRESS &&
+		glfwGetKey(gameWindow->winWindow, GLFW_KEY_LEFT) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_RIGHT) != GLFW_PRESS)
 		buttonPressed = false;
 
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_SPACE) == GLFW_PRESS && !buttonPressed) {
