@@ -95,11 +95,6 @@ void RenderHandler::keyInput(int key, float speed){
 	if (key == 4) {
 		activeBlockIsMoving = true;
 	}
-	//int temp_z = activeBlock_z;
-	//int grid_x = activeBlock_x + 3;
-	//int grid_y = activeBlock_y + 2;
-	//int gridLocation = (temp_z * 25) + ((grid_y - 1) * 5) + grid_x;
-	//std::cout << "grid location: " << gridLocation << " grid x: " << grid_x << " grid y: " << grid_y << std::endl;
 }
 
 void RenderHandler::mouseInput(glm::vec3 direction){
@@ -134,9 +129,9 @@ void RenderHandler::renderAllSolidBlocks(){
 	renderInactiveBlock(7, texture->layer_7);
 	renderInactiveBlock(6, texture->layer_6);
 	renderInactiveBlock(5, texture->layer_5);
-	renderInactiveBlock(7, texture->layer_4);
-	renderInactiveBlock(6, texture->layer_3);
-	renderInactiveBlock(5, texture->layer_2);
+	renderInactiveBlock(4, texture->layer_4);
+	renderInactiveBlock(3, texture->layer_3);
+	renderInactiveBlock(2, texture->layer_2);
 }
 
 /*
@@ -318,6 +313,29 @@ void RenderHandler::setGridZLoc(int currGridLoc){
 
 void RenderHandler::updateSpeed(float gamespeed){
 	speed = gamespeed;
+}
+
+void RenderHandler::updateTime(float time)
+{
+}
+
+void RenderHandler::descend(){
+	activeBlock_z += 1.0f;
+	if (movingActiveBlockCollision()) {
+		newActiveBlock();
+		activeBlock_x = 0;  activeBlock_y = 0; activeBlock_z = 0;
+		activeBlockIsMoving = false;
+	}
+}
+
+int RenderHandler::getScore()
+{
+	return 0;
+}
+
+int RenderHandler::getLayer()
+{
+	return 0;
 }
 
 void RenderHandler::cameraInit() {

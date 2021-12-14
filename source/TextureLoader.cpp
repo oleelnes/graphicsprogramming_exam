@@ -16,6 +16,9 @@ TextureLoader::TextureLoader(){
 
 }
 
+/*
+	Source 3 (see readme)
+*/
 GLuint TextureLoader::load_opengl_texture(const std::string& filepath)
 {
 	int w, h, bpp;

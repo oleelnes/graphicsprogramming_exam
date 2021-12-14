@@ -17,6 +17,10 @@ public:
 	void renderer();
 	void keyInput(int key, float time);
 	void updateSpeed(float gamespeed);
+	void updateTime(float time);
+	void descend();
+	int getScore();
+	int getLayer();
 	void mouseInput(glm::vec3 direction);
 	//Shader* main_shader = new Shader("resources/shaders/triangle.vs", "resources/shaders/triangle.fs");
 
@@ -27,6 +31,7 @@ private:
 	unsigned int inactiveVAO;
 	bool firstActiveBlockCall; //creates the VAO for the block!
 	bool inactive;
+
 	int activeBlock_x;
 	int activeBlock_y;
 	float activeBlock_z;
@@ -34,6 +39,8 @@ private:
 	int solidBlocks;
 	int grid[12 * 5 * 5];
 	int gridZLoc;
+	int score;
+	int layer;
 	std::vector<InactiveBlocksVertices> inactiveBlockVertices;
 
 	bool activeBlockIsMoving; //when true it makes it so that player cannot rotate or move it anymore!

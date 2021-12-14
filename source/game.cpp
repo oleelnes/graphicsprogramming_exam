@@ -18,6 +18,8 @@ void game::gameInit(){
 	
 }
 
+
+
 void game::run(){
 	gameInit();
 	
@@ -38,11 +40,16 @@ void game::run(){
 	int main_state = 0;
 	bool pauseMenu = false;
 
+	time = 0.0f;
+	timeBuffer = 0.0f;
+
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	while (!glfwWindowShouldClose(gameWindow->winWindow)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		
 		float currentFrame = glfwGetTime();
+		
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 		renderHandler->updateSpeed(2.5 * deltaTime);
@@ -62,13 +69,18 @@ void game::run(){
 				ui.mainMenu();
 				if (ui.gameStateTest != ui.mainmenu()) main_state = main_state_switch();
 				//std::cout << "you are in main menu!\tmain_state: " << main_state << " gamemode: " << gamemode << std::endl;
+				timeBuffer = glfwGetTime();
 			}
 			break;
 		case 1: //runs render and sends the gamemode variable
 			//main_state = renderHandler->render(gamemode); //gamemode has been decided in case 0/menu
+			time = glfwGetTime() - timeBuffer;
 			glfwSetInputMode(gameWindow->winWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 			renderHandler->renderer();
-			ui.inGameStats(1, 2, 7.0f);
+			ui.inGameStats(1, 2, 7.0f - time);
+			
+			if (!checkTimeUp(time));
+			else renderHandler->descend();
 			break;
 		case 2:
 			std::cout << "game will now exit!\tmain_state: " << main_state << " gamemode: " << gamemode << std::endl;
@@ -121,12 +133,14 @@ void game::input()
 
 
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_UP) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_DOWN) != GLFW_PRESS &&
-		glfwGetKey(gameWindow->winWindow, GLFW_KEY_LEFT) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_RIGHT) != GLFW_PRESS)
+		glfwGetKey(gameWindow->winWindow, GLFW_KEY_LEFT) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_RIGHT) != GLFW_PRESS 
+		&& glfwGetKey(gameWindow->winWindow, GLFW_KEY_SPACE) == !GLFW_PRESS)
 		buttonPressed = false;
 
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_SPACE) == GLFW_PRESS && !buttonPressed) {
-		//buttonPressed = true;
+		buttonPressed = true;
 		renderHandler->keyInput(4, cameraSpeed);
+		timeBuffer += time - 7.0f;
 	}
 
 	glfwGetCursorPos(gameWindow->winWindow, &xPos, &yPos);
@@ -138,6 +152,11 @@ void game::input()
 	renderHandler->mouseInput(direction);
 	lastxoffset = 0.0f; lastyoffset = 0.0f;
 	//std::cout << "pitch: " << pitch << " yaw: " << yaw << std::endl;
+}
+
+bool game::checkTimeUp(float time) {
+	if (time >= 7.0f) { timeBuffer += 7.0f; return true; }
+	else return false;;
 }
 
 void game::mouseInput()

@@ -1,13 +1,12 @@
 #include "window.h"
 
 window::window(){
-	//empty!! make it so the title of the window is editable through the making of the pointer.,!
+	//Possible TODO: allow title of window to be created when making a pointer/object to this class.
 }
 
 void window::windowCreator(){
 	glfwWindowHint(GLFW_SAMPLES, 4);
-	//glEnable(GL_MULTISAMPLE);
-	winWindow = glfwCreateWindow(1920, 1080, "Block", glfwGetPrimaryMonitor(), NULL);
+	winWindow = glfwCreateWindow(1920, 1080, "Block out", glfwGetPrimaryMonitor(), NULL);
 	glfwSetWindowAspectRatio(winWindow, 16, 9);
 
 	glfwMakeContextCurrent(winWindow);

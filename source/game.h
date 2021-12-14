@@ -29,11 +29,14 @@ private:
 	double xPos = 0.0f;
 	double yPos = 0.0f;
 	float sensitivity = 10.1f; //originalt: 0.1f
+	float time;
+	float timeBuffer;
 	
 	//functions
 	void gameInit();
 	void input();
 	void mouseInput();
+	bool checkTimeUp(float time);
 public:
 	window* gameWindow = new window();
 	void run();
