@@ -12,8 +12,6 @@ New in version 0.8:
 * Roll rotation is added and fully functional
 
 
-
-
 How to run (visual studio): 
 1. Copy repository web link
 2. Open Visual Studio
@@ -79,5 +77,12 @@ Utilization of source: Tutorial material for the building of the class. The clas
 Utilization of source: Almost an identical copy of original, but with slight adjustments in order
 to fit my code better.
 Source: prog2002 course materials/labs -> lab04 -> GLuint load_opengl_texture(const std::string& filepath, GLuint slot)
+
+4: Camera functions
+
+5: Fragment Shader
+
+6: Vertex Shader 
+
 
 Source list is NOT finished yet.

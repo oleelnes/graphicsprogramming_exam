@@ -1,6 +1,6 @@
 #include "Shader.h"
 #include "TextureLoader.h"
-#include "Cube.h"
+#include "Tunnel.h"
 #include "Block.h"
 #include <iostream>
 #include <cstdlib>
@@ -28,9 +28,12 @@ public:
 	int getScore();
 	int getLayer();
 	void mouseInput(glm::vec3 direction);
+	bool getGameOver();
 	//Shader* main_shader = new Shader("resources/shaders/triangle.vs", "resources/shaders/triangle.fs");
 
 private:
+	bool gameOver = false;
+	void setGameOver();
 	void renderActiveBlock();
 	unsigned int blocksVAO;
 	unsigned int tunnelVAO;
@@ -62,7 +65,7 @@ private:
 	int drawcallcounter;
 
 	int gamemode1_state = 0;
-	Cube* cube;
+	Tunnel* tunnel;
 	Block* block;
 	TextureLoader* texture;
 

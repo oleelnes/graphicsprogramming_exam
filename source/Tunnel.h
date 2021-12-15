@@ -7,23 +7,17 @@
 #include <cmath>
 #include <vector>
 
-class Cube {
+class Tunnel {
 public:
     glm::vec3 pointLightPositions[2] = {
         glm::vec3(2.5f,  2.5f,  5.0f),
         glm::vec3(0.7f,  0.2f,  2.0f)
     };
-    GLuint load_opengl_texture(const std::string& filepath);
-    GLuint gridTexture;
-    GLuint activeBlockTexture;
-    GLuint inactiveTexture;
     Shader* shader = new Shader("resources/shaders/triangle.vs", "resources/shaders/triangle.fs");
     Shader* lightCubeShader = new Shader("resources/shaders/light_cube.vs", "resources/shaders/light_cube.fs");
     unsigned int cubeVAO;
-    Cube();
+    Tunnel();
     void createCubeVAO();
-    unsigned int createCustomCube(float length, float height, float depth, float heightOffset);
-    unsigned int createCustomLightCube(float length, float height, float depth, float lengthOffset, float heightOffset, float depthOffset);
     unsigned int createCubeTunnel(int x_stride, int y_stride, int z_stride);
 
 

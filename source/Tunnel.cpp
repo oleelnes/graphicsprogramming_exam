@@ -1,4 +1,4 @@
-#include "Cube.h"
+#include "Tunnel.h"
 
 struct Vertex {
 	glm::vec3 location;
@@ -6,117 +6,13 @@ struct Vertex {
 	glm::vec2 texCoords;
 };
 
-Cube::Cube(){
-	//glGenVertexArrays(1, &cubeVAO);
-	//createCubeVAO();
-	//glEnable(GL_BLEND);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//gridTexture = load_opengl_texture("resources/textures/grid_tile.png");
-	//activeBlockTexture = load_opengl_texture("resources/textures/active_block_tile.png");
-	//inactiveTexture = load_opengl_texture("resources/textures/inactive_tile.png");
+Tunnel::Tunnel(){
+	
 }
 
-void Cube::createCubeVAO(){
-	unsigned int VBO;
 
-	glGenBuffers(1, &VBO);
-	glBindVertexArray(this->cubeVAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
-
-	//Position attributes
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	//Normal attributes
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	//Texture attributes
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-}
-
-unsigned int Cube::createCustomCube(float length, float height, float depth, float heightOffset){
-	float tempArray[288];
-	for (int i = 0; i < 288; i++) {
-		if (i % 8 == 0) {
-			tempArray[i] = cube_vertices[i] * length;
-		}
-		else if (i % 8 == 1) {
-			tempArray[i] = (cube_vertices[i] * height) + heightOffset;
-		}
-		else if (i % 8 == 2) {
-			tempArray[i] = cube_vertices[i] * depth;
-		}
-		//TODO: try putting else if on the two above and simply else on this one instead.
-		else{
-			tempArray[i] = cube_vertices[i];
-		}
-	}
-	unsigned int tempVAO;
-	glGenVertexArrays(1, &tempVAO);
-
-	unsigned int VBO;
-
-	glGenBuffers(1, &VBO);
-	glBindVertexArray(tempVAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(tempArray), tempArray, GL_STATIC_DRAW);
-
-	//Position attributes
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	//Normal attributes
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	//Texture attributes
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-
-	return tempVAO;
-}
-
-unsigned int Cube::createCustomLightCube(float length, float height, float depth, float lengthOffset, float heightOffset, float depthOffset)
-{
-	float tempArray[288];
-	for (int i = 0; i < 288; i++) {
-		if (i % 8 == 0) {
-			tempArray[i] = (cube_vertices[i] * length) + lengthOffset;
-		}
-		else if (i % 8 == 1) {
-			tempArray[i] = (cube_vertices[i] * height) + heightOffset;
-		}
-		else if (i % 8 == 2) {
-			tempArray[i] = (cube_vertices[i] * depth) + depthOffset;
-		}
-		else {
-			tempArray[i] = cube_vertices[i];
-		}
-	}
-	unsigned int tempVAO;
-	glGenVertexArrays(1, &tempVAO);
-
-	unsigned int VBO;
-
-	glGenBuffers(1, &VBO);
-	glBindVertexArray(tempVAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 288 , &tempArray[0], GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-
-	glEnableVertexAttribArray(0);
-
-	return tempVAO;
-}
-
-unsigned int Cube::createCubeTunnel(int x_stride, int y_stride, int z_stride)
+unsigned int Tunnel::createCubeTunnel(int x_stride, int y_stride, int z_stride)
 {
 	const int left_plane = (y_stride * z_stride);
 	const int right_plane = left_plane;
@@ -236,32 +132,3 @@ unsigned int Cube::createCubeTunnel(int x_stride, int y_stride, int z_stride)
 	return tunnel_VAO;
 }
 
-
-GLuint Cube::load_opengl_texture(const std::string& filepath)
-{
-	int w, h, bpp;
-
-
-	auto pixels = stbi_load(filepath.c_str(), &w, &h, &bpp, STBI_rgb_alpha);
-	if (!pixels) std::cout << "error: image failed to load" << std::endl;
-	else std::cout << "success! image loaded" << std::endl;
-	GLuint tex;
-	glGenTextures(1, &tex);
-	//glActiveTexture(GL_TEXTURE0 + slot);
-	glBindTexture(GL_TEXTURE_2D, tex);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-
-	if (pixels) stbi_image_free(pixels);
-
-	return tex;
-}

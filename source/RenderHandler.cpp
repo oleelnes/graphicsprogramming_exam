@@ -10,7 +10,7 @@
 
 
 RenderHandler::RenderHandler(){
-	cube = new Cube();
+	tunnel = new Tunnel();
 	block = new Block();
 	texture = new TextureLoader();
 	cameraInit();
@@ -20,9 +20,9 @@ RenderHandler::RenderHandler(){
 	activeBlockIsMoving = false;
 	inactive = false;
 	glGenVertexArrays(1, &tunnelVAO);
-	tunnelVAO = cube->createCubeTunnel(5, 5, 10);
-	activeBlock_x = 0;
-	activeBlock_y = 0;
+	tunnelVAO = tunnel->createCubeTunnel(5, 5, 10);
+	activeBlock_x = 2;
+	activeBlock_y = 1;
 	activeBlock_z = 0;
 	for (int i = 0; i < (11 * 5 * 5) + 25; i++) {
 		if (i <= 250)
@@ -39,7 +39,7 @@ RenderHandler::RenderHandler(){
 	auto& vertex = inactiveBlockVertices.back();
 	vertex.type = 0; // what type of block
 	vertex.vertices = 0; // how many vertices to draw
-	vertex.layer = 10; //sentinel key
+	vertex.layer = 10; //bottom layer
 	vertex.verticeMultiplier = 1;
 	solidBlocks = 0; //counter that is used to access the various entries of the inactiveBlockVertices-vector/solidBlocks-vector
 	gridZLoc = 0;
@@ -51,20 +51,21 @@ RenderHandler::RenderHandler(){
 	yaw = 0;
 	roll = 0;
 	pitch = 0;
-
+	score = 0;
+	layer = 10;
 	srand(time(NULL)); rand(); //initiating random sequence and throwing away first random value
 }
 
 void RenderHandler::renderer(){
 	
-
-	cube->shader->use();
+	
+	tunnel->shader->use();
 	light();
 	transformations();
 
 	//creating tunnel
 	glBindVertexArray(tunnelVAO);
-	cube->shader->setInt("withTexture", 1);
+	tunnel->shader->setInt("withTexture", 1);
 	//glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture->gridTexture);
 	glDrawArrays(GL_TRIANGLES, 0, 6*(((5*10)*4)+(5*5))); //endret til 6
@@ -76,8 +77,11 @@ void RenderHandler::renderer(){
 
 	if (inactive) renderAllSolidBlocks();
 	if (activeBlockIsMoving) moveActiveBlock();
-	renderActiveBlock();
-	
+	if (!gameOver) {
+		renderActiveBlock();
+	}
+
+	setGameOver();
 
 	glBindVertexArray(0);
 
@@ -93,7 +97,7 @@ void RenderHandler::init(){
 void RenderHandler::keyInput(int key, float speed){
 	if (staticActiveBlockCollision(key));//std::cout << "collision" << std::endl;
 	//up
-	else {
+	else if (!gameOver){
 		if (key == 0 && !activeBlockIsMoving)
 			activeBlock_y += 1; input = true;
 		//down
@@ -107,36 +111,44 @@ void RenderHandler::keyInput(int key, float speed){
 			activeBlock_x -= 1; input = true;
 
 		//ROTATION INPUT:
-		// yaw +1
+		// roll +1
 		if (key == 4 && !activeBlockIsMoving && canRotate()) {
 			roll++;
 			if (roll >= 4) roll = 0;
 			input = true;
 		}
-		//yaw -1
+		//roll -1
 		if (key == 5 && !activeBlockIsMoving && canRotate()) {
 			roll--;
 			if (roll <= -1) roll = 3;
 			input = true;
 		}
 		//pitch +1
-		if (key == 6 && !activeBlockIsMoving) {
-
+		if (key == 6 && !activeBlockIsMoving && canRotate()) {
+			pitch++;
+			if (pitch >= 4) pitch = 0;
+			input = true;
 		}
 
 		//pitch -1
-		if (key == 7 && !activeBlockIsMoving) {
-
+		if (key == 7 && !activeBlockIsMoving && canRotate()) {
+			pitch--;
+			if (pitch <= -1) pitch = 3;
+			input = true;
 		}
 
-		//roll +1
-		if (key == 8 && !activeBlockIsMoving) {
-
+		//yaw +1
+		if (key == 8 && !activeBlockIsMoving && canRotate()) {
+			yaw++;
+			if (yaw >= 4) yaw = 0;
+			input = true;
 		}
 
-		//roll -1
-		if (key == 9 && !activeBlockIsMoving) {
-
+		//ryaw -1
+		if (key == 9 && !activeBlockIsMoving && canRotate()) {
+			yaw--;
+			if (yaw <= -1) yaw = 3;
+			input = true;
 		}
 
 
@@ -156,7 +168,24 @@ void RenderHandler::activeBlockRotation(int yaw, int pitch, int roll) {
 	}
 	for (int r = 0; r < roll; r++) {
 		for (int i = 0; i < 4; i++) {
-			tempVec[i].location = { activeBlock_x + ((activeBlock_y - activeBlockLocation[i].location.y)), activeBlock_y - (activeBlock_x - activeBlockLocation[i].location.x), activeBlockLocation[i].location.z };
+			
+			float pitch_y = 0.0f;
+			float pitch_z = 0.0f;
+			if (pitch == 1) {
+				pitch_z = - (activeBlock_y - activeBlockLocation[i].location.y) ;
+				pitch_y = 0.0f;
+			}
+			if (pitch == 2) {
+				pitch_z = 0.0f;
+				pitch_y = -1.0f;
+			}
+			if (pitch == 3) {
+				pitch_z = (activeBlock_y - activeBlockLocation[i].location.y);
+				pitch_y = 0.0f;
+			}
+			tempVec[i].location = { activeBlock_x + ((activeBlock_y - activeBlockLocation[i].location.y)), 
+				activeBlock_y - (activeBlock_x - activeBlockLocation[i].location.x)*pitch_y, 
+				activeBlockLocation[i].location.z + pitch_z};
 			std::cout << activeBlock_y << std::endl;
 			activeBlockLocation[i].location = tempVec[i].location;
 		}
@@ -168,8 +197,13 @@ void RenderHandler::mouseInput(glm::vec3 direction){
 	cameraFront = glm::normalize(direction);
 }
 
+bool RenderHandler::getGameOver()
+{
+	return gameOver;
+}
+
 void RenderHandler::renderActiveBlock(){
-	cube->shader->use();
+	tunnel->shader->use();
 	if (firstActiveBlockCall) {
 		//function that adds previous block's location to the grid
 		//glGenVertexArrays(1, &blocksVAO);
@@ -186,41 +220,40 @@ void RenderHandler::renderActiveBlock(){
 		//TODO: These ifs are redunant - fix it when rotation is done
 		if (activeBlockType == 0) {
 			activeBlocks = 1;
-			blocksVAO = block->newActiveBlock(0, 1.0f, 1.0f, 1.0f, roll, pitch, yaw);
+			blocksVAO = block->newActiveBlock(0, 1.0f, 1.0f, activeBlock_z, roll, pitch, yaw);
 			firstActiveBlockCall = false;
-			std::cout << " in 0 " <<  std::endl;
 		}
 		else if (activeBlockType == 1) { //L
 			activeBlocks = 4;
-			blocksVAO = block->newActiveBlock(1, 1.0f, 1.0f, 1.0f, roll, pitch, yaw);
+			blocksVAO = block->newActiveBlock(1, 1.0f, 1.0f, activeBlock_z, roll, pitch, yaw);
 			firstActiveBlockCall = false;
-			std::cout << " in 1 " << std::endl;
-
-			
 		}
 		else if (activeBlockType == 2) { //Z
 			activeBlocks = 4;
-			blocksVAO = block->newActiveBlock(2, 1.0f, 1.0f, 1.0f, roll, pitch, yaw);
+			blocksVAO = block->newActiveBlock(2, 1.0f, 1.0f, activeBlock_z, roll, pitch, yaw);
 			firstActiveBlockCall = false;
-			std::cout << " in 2 " << std::endl;
 		}
 		else { //T
 			activeBlocks = 4;
-			blocksVAO = block->newActiveBlock(3, 1.0f, 1.0f, 1.0f, roll, pitch, yaw);
+			blocksVAO = block->newActiveBlock(3, 1.0f, 1.0f, activeBlock_z, roll, pitch, yaw);
 			firstActiveBlockCall = false;
-			std::cout << " in 3 " << std::endl;
 		}
 	}
 	if (input) {
 		//glGenVertexArrays(1, &blocksVAO);
-		blocksVAO = block->newActiveBlock(activeBlockType, 1.0f, 1.0f, 1.0f, roll, pitch, yaw);
+		blocksVAO = block->newActiveBlock(activeBlockType, 1.0f, 1.0f, activeBlock_z, roll, pitch, yaw);
 		input = false;
 	}
 	glBindVertexArray(blocksVAO);
 	glBindTexture(GL_TEXTURE_2D, texture->activeBlockTexture);
 	//enables moving through translating position
-	//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 0.1f));
+	//model = glm::rotate(model, glm::radians(90.0f*pitch), glm::vec3(0.0f, 0.0f, 0.0f));
+
+	model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(activeBlock_x, activeBlock_y, activeBlock_z));
+	//model = glm::rotate(model, glm::radians(90.0f * pitch), glm::vec3(1, 0, 0));
+	model = glm::rotate(model, glm::radians(90.0f * yaw), glm::vec3(0, 1, 0));
+	//model = glm::translate(model, glm::vec3(activeBlock_x, activeBlock_y, activeBlock_z));
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	//drawing
 	glDrawArrays(GL_TRIANGLES, 0, 36 * activeBlocks);
@@ -246,7 +279,7 @@ void RenderHandler::renderAllSolidBlocks(){
 	This function is called by
 */
 void RenderHandler::renderInactiveBlock(int requestedLayer, GLuint& layer) {
-	cube->shader->use();
+	tunnel->shader->use();
 
 	glBindVertexArray(inactiveVAO);
 	model = glm::mat4(1.0f);
@@ -268,51 +301,13 @@ void RenderHandler::renderInactiveBlock(int requestedLayer, GLuint& layer) {
 
 }
 
-//returns int main_state back to game (or whatever .cpp that has a pointer to this class)
-int RenderHandler::render(int gamemode)
-{
-	/*switch (gamemode) {
-	case 1:
-		//first sort of gamemode. Includes a number of ifs dependent on input (+) and decides what int to return. The int that returns becomes the new main_state
-		//int in the game.cpp program, and thus changes what switch-case will be entered on the next loop
-		
-		switch (gamemode1_state) {
-		case 0: //gamemode1->init();
-			gamemode1_state = 1;
-			break;
-		case 1: //render game
-			break;
-		case 2: //pause menu
-			break;
-		case 3: //dead
-			break;
-		case 4: //restart
-			break;
-		case 5: //exit gamemode1->~gamemode1(); / ~gamemode1;
-		default:
-			std::cout << "error" << std::endl;
-			break;
-		}
-
-		break;
-	case 2:
-		break;
-	case 3:
-		break;
-	default:
-		break;
-	}*/
-	return 1;
-}
-
-
 void RenderHandler::moveActiveBlock(){
 	if(!movingActiveBlockCollision())
 		activeBlock_z += 5.5 * speed;
 	else {
 		//std::cout << "moving block stopped" << std::endl;
 		newActiveBlock();
-		activeBlock_x = 0;  activeBlock_y = 0; activeBlock_z = 0;
+		activeBlock_x = 2;  activeBlock_y = 1; activeBlock_z = 0;
 		activeBlockIsMoving = false;
 	}
 }
@@ -364,8 +359,10 @@ void RenderHandler::newActiveBlock(){
 	vertex.layer = gridZLoc;
 	vertex.vertices = inactiveBlockVertices[solidBlocks - 1].vertices + 36 * activeBlocks;
 	vertex.verticeMultiplier = activeBlocks;
-	activeBlock_x = 0;  activeBlock_y = 0; activeBlock_z = 0; roll = 0; pitch = 0; yaw = 0;
+	if (gridZLoc < layer) layer = gridZLoc;
+	activeBlock_x = 2;  activeBlock_y = 1; activeBlock_z = 0; roll = 0; pitch = 0; yaw = 0;
 	inactive = true;
+	score += 5 * activeBlocks;
 }
 
 bool RenderHandler::staticActiveBlockCollision(int key)
@@ -416,14 +413,14 @@ bool RenderHandler::canRotate() {
 int RenderHandler::getGridXLoc(int block)
 {
 	//int grid_x = activeBlock_x + 3;
-	int grid_x = activeBlockLocation[block].location.x + 3;
+	int grid_x = activeBlockLocation[block].location.x + 1; //+3
 	return grid_x;
 }
 
 int RenderHandler::getGridYLoc(int block)
 {
 	//int grid_y = activeBlock_y + 2;
-	int grid_y = activeBlockLocation[block].location.y + 2;
+	int grid_y = activeBlockLocation[block].location.y + 1; //+2
 	return grid_y;
 }
 
@@ -499,61 +496,74 @@ void RenderHandler::descend(){
 
 int RenderHandler::getScore()
 {
-	return 0;
+	return score;
 }
 
 int RenderHandler::getLayer()
 {
-	return 0;
+	return layer;
 }
 
+/*
+	Source 4 (See readme for full referencing)
+*/
 void RenderHandler::cameraInit() {
 	cameraPos = glm::vec3(1.68f, 2.5f, -2.74f);
 	cameraFront = glm::vec3(0.0f, 0.0f, 0.0f);
 	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 }
 
+/*
+	Source 4 (See readme for full referencing)
+*/
 void RenderHandler::transformations() {
 	// view/projection transformations
 	projection = glm::perspective(glm::radians(85.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
 	view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-	cube->shader->setMat4("projection", projection);
-	cube->shader->setMat4("view", view);
+	tunnel->shader->setMat4("projection", projection);
+	tunnel->shader->setMat4("view", view);
 
 	// world transformation
 	model = glm::mat4(1.0f);
 	//model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	cube->shader->setMat4("model", model);
+	tunnel->shader->setMat4("model", model);
 }
+
+/*
+	Source 4 (See readme for full referencing)
+*/
 void RenderHandler::light()
 {
-	cube->shader->setVec3("lightPosition", cameraPos.x, cameraPos.y, cameraPos.z);
-	cube->shader->setVec3("lightDirection", cameraFront.x, cameraFront.y, cameraFront.z);
-	cube->shader->setFloat("lightCutOff", glm::cos(glm::radians(50.5f)));
-	cube->shader->setFloat("lightOuterCutOff", glm::cos(glm::radians(70.5f)));
-	cube->shader->setVec3("viewPos", cameraPos.x, cameraPos.y, cameraPos.z);
+	tunnel->shader->setVec3("lightPosition", cameraPos.x, cameraPos.y, cameraPos.z);
+	tunnel->shader->setVec3("lightDirection", cameraFront.x, cameraFront.y, cameraFront.z);
+	tunnel->shader->setFloat("lightCutOff", glm::cos(glm::radians(50.5f)));
+	tunnel->shader->setFloat("lightOuterCutOff", glm::cos(glm::radians(70.5f)));
+	tunnel->shader->setVec3("viewPos", cameraPos.x, cameraPos.y, cameraPos.z);
 
 	// light properties
-	cube->shader->setVec3("lightAmbient", 0.1f, 0.1f, 0.1f);
-	cube->shader->setVec3("lightDiffuse", 0.8f, 0.8f, 0.8f);
-	cube->shader->setVec3("lightSpecular", 1.0f, 1.0f, 1.0f);
-	cube->shader->setFloat("lightConstant", 1.0f);
-	cube->shader->setFloat("lightLinear", 0.09f);
-	cube->shader->setFloat("lightQuadratic", 0.032f);
+	tunnel->shader->setVec3("lightAmbient", 0.1f, 0.1f, 0.1f);
+	tunnel->shader->setVec3("lightDiffuse", 0.8f, 0.8f, 0.8f);
+	tunnel->shader->setVec3("lightSpecular", 1.0f, 1.0f, 1.0f);
+	tunnel->shader->setFloat("lightConstant", 1.0f);
+	tunnel->shader->setFloat("lightLinear", 0.09f);
+	tunnel->shader->setFloat("lightQuadratic", 0.032f);
 
 	// pointlight
-	cube->shader->setVec3("pointLights[0].position", cube->pointLightPositions[0].x, cube->pointLightPositions[0].y, cube->pointLightPositions[0].z);
-	cube->shader->setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
-	cube->shader->setVec3("pointLights[0].diffuse", 0.1f, 0.1f, 0.1f);
-	cube->shader->setVec3("pointLights[0].specular", 0.1f, 0.1f, 0.1f);
-	cube->shader->setFloat("pointLights[0].constant", 0.1f);
-	cube->shader->setFloat("pointLights[0].linear", 0.09f);
-	cube->shader->setFloat("pointLights[0].quadratic", 0.032f);
+	tunnel->shader->setVec3("pointLights[0].position", tunnel->pointLightPositions[0].x, tunnel->pointLightPositions[0].y, tunnel->pointLightPositions[0].z);
+	tunnel->shader->setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
+	tunnel->shader->setVec3("pointLights[0].diffuse", 0.1f, 0.1f, 0.1f);
+	tunnel->shader->setVec3("pointLights[0].specular", 0.1f, 0.1f, 0.1f);
+	tunnel->shader->setFloat("pointLights[0].constant", 0.1f);
+	tunnel->shader->setFloat("pointLights[0].linear", 0.09f);
+	tunnel->shader->setFloat("pointLights[0].quadratic", 0.032f);
 
 
-	cube->shader->setFloat("materialShininess", 32.0f);
+	tunnel->shader->setFloat("materialShininess", 32.0f);
 }
 
+/*
+	Source 4 (See readme for full referencing)
+*/
 void RenderHandler::projectionInit() {
 	//projection * view * model * aPos -> these three initiations could possibly be elsewhere
 	model = glm::mat4(1.0f);
@@ -561,10 +571,15 @@ void RenderHandler::projectionInit() {
 	projection = glm::perspective(glm::radians(85.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
 
 	//levelShader uniform locations
-	modelLoc = cube->shader->getUniformLoc("model");
+	modelLoc = tunnel->shader->getUniformLoc("model");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-	viewLoc = cube->shader->getUniformLoc("view");
+	viewLoc = tunnel->shader->getUniformLoc("view");
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-	projectionLoc = cube->shader->getUniformLoc("projection");
+	projectionLoc = tunnel->shader->getUniformLoc("projection");
 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+}
+
+void RenderHandler::setGameOver(){
+	if (layer == 1) gameOver = true;
+	else gameOver = false;
 }

@@ -39,11 +39,13 @@ void game::run(){
 	int gamemode = 0;
 	int main_state = 0;
 	bool pauseMenu = false;
+	int score = 0;
+	int layer = 0;
 
 	time = 0.0f;
 	timeBuffer = 0.0f;
 
-	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+	glClearColor(0.2f, 0.03f, 0.5f, 1.0f);
 	while (!glfwWindowShouldClose(gameWindow->winWindow)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -63,12 +65,10 @@ void game::run(){
 		case 0: //menu -- decides int gamemode and changes main_state to 1 or 2 depending on whether a gamemode has been selected or if exit game has been selected
 			glfwSetInputMode(gameWindow->winWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 			if (pauseMenu) {
-				std::cout << "you are in pause menu!\tmain_state: " << main_state << " gamemode: " << gamemode << std::endl;
 			}
 			else {
 				ui.mainMenu();
-				if (ui.gameStateTest != ui.mainmenu()) main_state = main_state_switch();
-				//std::cout << "you are in main menu!\tmain_state: " << main_state << " gamemode: " << gamemode << std::endl;
+				if (ui.gameStateTest != ui.mainmenu() && !buttonPressed) { main_state = main_state_switch(); renderHandler = new RenderHandler(); }
 				timeBuffer = glfwGetTime();
 			}
 			break;
@@ -77,10 +77,20 @@ void game::run(){
 			time = glfwGetTime() - timeBuffer;
 			glfwSetInputMode(gameWindow->winWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 			renderHandler->renderer();
-			ui.inGameStats(1, 2, 7.0f - time);
-			
-			if (!checkTimeUp(time));
-			else renderHandler->descend();
+			score = renderHandler->getScore();
+			layer = 11 - renderHandler->getLayer();
+			if (!renderHandler->getGameOver()) {
+				ui.inGameStats(score, layer, 7.0f - time);
+				if (!checkTimeUp(time));
+				else renderHandler->descend();
+			}
+			else {
+				ui.gameOverStats(score);
+				if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_SPACE) == GLFW_PRESS && !buttonPressed) {
+					main_state = 0;
+					buttonPressed = true;
+				}
+			}
 			break;
 		case 2:
 			std::cout << "game will now exit!\tmain_state: " << main_state << " gamemode: " << gamemode << std::endl;
@@ -90,6 +100,7 @@ void game::run(){
 		default:
 			std::cout << "something very weird happened! This should absofruitely not happen!" << std::endl;
 		}
+		
 		
 		input();
 		glfwPollEvents();
@@ -185,7 +196,6 @@ void game::input()
 	direction.z = sin(glm::radians(-270.0f)) * cos(glm::radians(0.0f));
 	renderHandler->mouseInput(direction);
 	lastxoffset = 0.0f; lastyoffset = 0.0f;
-	//std::cout << "pitch: " << pitch << " yaw: " << yaw << std::endl;
 }
 
 bool game::checkTimeUp(float time) {
