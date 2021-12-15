@@ -1,16 +1,15 @@
 BLOCKOUT Game
 Exam for prog2002
 
-Version 0.6
+Version 0.7
 
-Date: 14/12/2021
-Time: 22:15
+Date: 15/12/2021
+Time: 11:35
 
-New in version 0.6: 
-* Active block now descends one block further down the tunnel if seven seconds passes
-	- Every time it descends one block, the necessary collision detection functions are called
-	  in order to check whether or not it should solidify.
-* Added some more sources
+New in version 0.7: 
+* Complex active blocks added -> not added to solid blocks yet.
+	- Rotation mechanics not added yet.
+* Source list updated
 
 
 How to run (visual studio): 
@@ -23,7 +22,7 @@ How to run (visual studio):
 	6. Now, the program should run
 
 
-Controls:
+CONTROLS:
 ESC: Exits game
 UP: Up
 DOWN: Down
@@ -41,17 +40,30 @@ VERSIONS:
 Texture for inactive blocks added
 0.5: Added textures for sections of the tunnel; section-dependent texture/color on solid blocks added; 
 added TextureLoader-class.
-0.6: Current version (See "new in version 0.6") 
+0.6: Active block descends one block depending on time.
+0.7: Current version (See "new in version 0.6") 
 
+ABOUT SOURCES:
+References to sources are in the code, either:
+	1. At the top of a class (in the class' .cpp file)
+	2. Above a given function 
 
-SOURCES:
+SOURCE LIST:
 1. Shader.h and Shader.cpp: 
+Type: class
+Utilization of source: Almost an identical copy, mostly made by strictly following the steps of the tutorial.
 Accessed 17.11.2021. Available at: https://learnopengl.com/code_viewer_gh.php?code=includes/learnopengl/shader_s.h 
 Also avaiable at: https://learnopengl.com/Getting-started/Shaders
-(Not an identical copy, but mostly made by strictly following the steps)
+
 2. ImguiHandler.cpp and ImguiHandler.h:
-Made through following tutorials.
+Utilization of source: Tutorial material for the building of the class. The class is not a copy.
 2.1: Accessed 11.12.2021. Available at: https://blog.conan.io/2019/06/26/An-introduction-to-the-Dear-ImGui-library.html
 2.2: Accessed 11.12.2021. Available at: https://github.com/ocornut/imgui/tree/master/examples
 2.3: Accessed 09.12.2021. Available at: https://www.youtube.com/watch?v=nVaQuNXueFw&ab_channel=TheCherno
-More sources to come!
+
+3: TextureLoader.cpp -> load_opengl_texture-function:
+Utilization of source: Almost an identical copy of original, but with slight adjustments in order
+to fit my code better.
+Source: prog2002 course materials/labs -> lab04 -> GLuint load_opengl_texture(const std::string& filepath, GLuint slot)
+
+Source list is NOT finished yet.

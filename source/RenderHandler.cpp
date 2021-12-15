@@ -38,6 +38,11 @@ RenderHandler::RenderHandler(){
 	solidBlocks = 0; //counter that is used to access the various entries of the inactiveBlockVertices-vector/solidBlocks-vector
 	gridZLoc = 0;
 	drawcallcounter = 0;
+	activeBlockType = 0;
+	lastActiveBlockType = 0;
+	activeBlocks = 1;
+
+	srand(time(NULL)); rand(); //initiating random sequence and throwing away first random value
 }
 
 void RenderHandler::renderer(){
@@ -106,18 +111,48 @@ void RenderHandler::renderActiveBlock(){
 	if (firstActiveBlockCall) {
 		//function that adds previous block's location to the grid
 		glGenVertexArrays(1, &blocksVAO);
-		blocksVAO = block->newActiveBlock(1, 1.0f, 1.0f, 1.0f);
-		firstActiveBlockCall = false;
+		lastActiveBlockType = activeBlockType;
+		activeBlockType = rand() % 4; //this gives us either 0, 1, 2 or 3
+		if (activeBlockType == lastActiveBlockType) {
+			if (activeBlockType > 2) activeBlockType--;
+			else activeBlockType++;
+		}
+		if (activeBlockType > 3 || activeBlockType < 0) activeBlockType = 2;
+		std::cout << "active block type: " << activeBlockType << std::endl;
+		if (activeBlockType == 0) {
+			activeBlocks = 1;
+			blocksVAO = block->newActiveBlock(0, 1.0f, 1.0f, 1.0f);
+			firstActiveBlockCall = false;
+			std::cout << " in 0 " <<  std::endl;
+		}
+		else if (activeBlockType == 1) { //L
+			activeBlocks = 4;
+			blocksVAO = block->newActiveBlock(1, 1.0f, 1.0f, 1.0f);
+			firstActiveBlockCall = false;
+			std::cout << " in 1 " << std::endl;
+		}
+		else if (activeBlockType == 2) { //Z
+			activeBlocks = 4;
+			blocksVAO = block->newActiveBlock(2, 1.0f, 1.0f, 1.0f);
+			firstActiveBlockCall = false;
+			std::cout << " in 2 " << std::endl;
+		}
+		else { //T
+			activeBlocks = 4;
+			blocksVAO = block->newActiveBlock(3, 1.0f, 1.0f, 1.0f);
+			firstActiveBlockCall = false;
+			std::cout << " in 3 " << std::endl;
+		}
 	}
 	glBindVertexArray(blocksVAO);
-	//glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture->activeBlockTexture);
+	//enables moving through translating position
 	model = glm::translate(model, glm::vec3(activeBlock_x, activeBlock_y, activeBlock_z));
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	//drawing
+	glDrawArrays(GL_TRIANGLES, 0, 36 * activeBlocks);
 	glBindVertexArray(0);
 	glUseProgram(0);
-	//glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 
@@ -217,6 +252,7 @@ bool RenderHandler::movingActiveBlockCollision(){
 	if (grid[gridLocation + 25] == 1 && gridLocation < 275 - 23) {
 		grid[gridLocation] = 1;
 		setGridZLoc(gridLocation);
+		firstActiveBlockCall = true;
 		//std::cout << "collision with gridloc: " << gridLocation + 25 << std::endl;
 		return true;
 	}
@@ -230,7 +266,7 @@ bool RenderHandler::movingActiveBlockCollision(){
 */
 void RenderHandler::newActiveBlock(){
 	blocksVAO = block->newActiveBlock(1, 1.0f, 1.0f, 1.0f);
-	std::cout << "active z: " << activeBlock_z << " gridlocz: " << gridZLoc << std::endl;
+	//std::cout << "active z: " << activeBlock_z << " gridlocz: " << gridZLoc << std::endl;
 	glDeleteVertexArrays(1, &inactiveVAO);
 	glGenVertexArrays(1, &inactiveVAO);
 	inactiveVAO = block->activeToInactive(36, activeBlock_x, activeBlock_y, activeBlock_z);
@@ -244,8 +280,8 @@ void RenderHandler::newActiveBlock(){
 
 	//activeBlock_x = 0;  activeBlock_y = 0; activeBlock_z = 0; //setting the activeBlock locations to 0
 	//std::cout << "inactiveblock vertices: " << inactiveBlockVertices[solidBlocks].vertices << std::endl;
-	std::cout << "vertex layer of solid block " << solidBlocks << " is " << inactiveBlockVertices[solidBlocks].layer << " and solidblocks is: " << solidBlocks << std::endl;
-	std::cout << "vertices at "<< solidBlocks << " is: " << inactiveBlockVertices[solidBlocks].vertices << std::endl;
+	//std::cout << "vertex layer of solid block " << solidBlocks << " is " << inactiveBlockVertices[solidBlocks].layer << " and solidblocks is: " << solidBlocks << std::endl;
+	//std::cout << "vertices at "<< solidBlocks << " is: " << inactiveBlockVertices[solidBlocks].vertices << std::endl;
 	inactive = true;
 }
 
@@ -307,7 +343,7 @@ void RenderHandler::setGridZLoc(int currGridLoc){
 	else if (currGridLoc <= 75 && currGridLoc > 50) gridZLoc = 3;
 	else if (currGridLoc <= 50 && currGridLoc > 25) gridZLoc = 2;
 	else if (currGridLoc <= 25 && currGridLoc > 0) gridZLoc = 1;
-	std::cout << "grid location " << currGridLoc << " gave us a gridZLoc of " << gridZLoc << std::endl;
+	//std::cout << "grid location " << currGridLoc << " gave us a gridZLoc of " << gridZLoc << std::endl;
 }
 
 

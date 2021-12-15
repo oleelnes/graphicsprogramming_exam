@@ -4,17 +4,80 @@
 
 Block::Block(){
 //nothing yet
+	for (int i = 0; i < 36 * 4; i++) {
+		activeBlock.push_back({});
+		auto& vertex = activeBlock.back();
+		vertex.location = { 0.0f, 0.0f, 0.0f };
+		vertex.normals = { 0.0f, 0.0f, 0.0f };
+		vertex.texCoords = { 0.0f, 0.0f };
+	}
 }
 
 unsigned int Block::newActiveBlock(int type, float loc_x, float loc_y, float loc_z){
 	activeBlock.empty();
-	for (int v = 0; v < 36; v++) {
-		activeBlock.push_back({});
-		auto& vertex = activeBlock.back();
+	int blocks = 1;
 
-		vertex.location = { cube_vertices[(0 + v * 8)] + 2.0f, cube_vertices[(1 + v * 8)] + 1.0f, cube_vertices[(2 + v * 8)] + 0.0f};
-		vertex.normals = { cube_vertices[3 + v * 8], cube_vertices[4 + v * 8], cube_vertices[5 + v * 8] };
-		vertex.texCoords = { cube_vertices[6 + v * 8], cube_vertices[7 + v * 8] };
+	float x_0 = 2.0f;
+	float y_0 = 1.0f;
+
+	float x_1 = 0.0f;
+	float y_1 = 0.0f;
+
+	float x_2 = 0.0f;
+	float y_2 = 0.0f;
+
+	float x_3 = 0.0f;
+	float y_3 = 0.0f;
+
+	switch (type) {
+	case 0: //non-complex
+		blocks = 1;
+		break;
+	case 1: //L block
+		blocks = 4;
+		x_1 = x_0 + 1.0f;
+		y_1 = y_0;
+		x_2 = x_0;
+		y_2 = y_0 + 1.0f;
+		x_3 = x_0;
+		y_3 = y_0 + 2.0f;
+		break;
+	case 2: //Z block
+		blocks = 4;
+		x_1 = x_0 - 1.0f;
+		y_1 = y_0;
+		x_2 = x_0;
+		y_2 = y_0 + 1.0f;
+		x_3 = x_0 + 1.0f;
+		y_3 = y_0 + 1.0f;
+		break;
+	case 3: //T block
+		blocks = 4;
+		x_1 = x_0 + 1.0f;
+		y_1 = y_0;
+		x_2 = x_0 - 1.0f;
+		y_2 = y_0;
+		x_3 = x_0;
+		y_3 = y_0 + 1.0f;
+		break;
+	default:
+		break;
+	}
+	float curr_x = x_0;
+	float curr_y = y_0;
+	for (int b = 0; b < blocks; b++) {
+		if (b == 0) { curr_x = x_0; curr_y = y_0; }
+		else if (b == 1) { curr_x = x_1; curr_y = y_1; }
+		else if (b == 2) { curr_x = x_2; curr_y = y_2; }
+		else if (b == 3) { curr_x = x_3; curr_y = y_3; }
+		for (int v = 0; v < 36; v++) {
+			//activeBlock.push_back({});
+			//auto& vertex = activeBlock.back();
+
+			activeBlock[v + 36 * b].location = { cube_vertices[(0 + v * 8)] + curr_x, cube_vertices[(1 + v * 8)] + curr_y, cube_vertices[(2 + v * 8)] + 0.0f};
+			activeBlock[v + 36 * b].normals = { cube_vertices[3 + v * 8], cube_vertices[4 + v * 8], cube_vertices[5 + v * 8] };
+			activeBlock[v + 36 * b].texCoords = { cube_vertices[6 + v * 8], cube_vertices[7 + v * 8] };
+		}
 	}
 	unsigned int activeBlockVAO;
 	glGenVertexArrays(1, &activeBlockVAO);

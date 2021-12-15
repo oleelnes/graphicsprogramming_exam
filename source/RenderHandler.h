@@ -3,6 +3,7 @@
 #include "Cube.h"
 #include "Block.h"
 #include <iostream>
+#include <cstdlib>
 
 struct InactiveBlocksVertices {
 	int type;
@@ -41,6 +42,9 @@ private:
 	int gridZLoc;
 	int score;
 	int layer;
+	int activeBlockType;
+	int lastActiveBlockType;
+	int activeBlocks;
 	std::vector<InactiveBlocksVertices> inactiveBlockVertices;
 
 	bool activeBlockIsMoving; //when true it makes it so that player cannot rotate or move it anymore!

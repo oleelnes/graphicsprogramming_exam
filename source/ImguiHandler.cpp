@@ -18,11 +18,11 @@ void ImguiHandler::inGameStats(int score, int layer, float time){
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-	ImGui::SetNextWindowPos(ImVec2(io.DisplaySize.x * 0.81f, io.DisplaySize.y * 0.3f), 
+	ImGui::SetNextWindowPos(ImVec2(io.DisplaySize.x * 0.81f, io.DisplaySize.y * 0.3f),
 		ImGuiCond_Always, ImVec2(0.5f, 0.5f));
-	std::string timeBuffer = "TIME UNTIL ONE BLOCK DESCENT: \n" + std::to_string(time);
-	std::string scoreBuffer = "\nSCORE: " + std::to_string(score);		
-	std::string layerBuffer = "\nLAYER: " + std::to_string(layer);			
+	std::string timeBuffer = "TIME UNTIL NEXT BLOCK DESCENT: \n" + std::to_string(time);
+	std::string scoreBuffer = "\nSCORE: " + std::to_string(score);
+	std::string layerBuffer = "\nLAYER: " + std::to_string(layer);	
 	ImGui::Begin("in-game stats", NULL, window_flags);
 	ImGui::TextColored(colorBlue, timeBuffer.c_str());
 	ImGui::TextColored(colorBlue, scoreBuffer.c_str());
