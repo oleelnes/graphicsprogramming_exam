@@ -8,7 +8,12 @@
 struct InactiveBlocksVertices {
 	int type;
 	int vertices;
+	int verticeMultiplier;
 	int layer;
+};
+
+struct ActiveBlockPos {
+	glm::vec3 location;
 };
 
 class RenderHandler {
@@ -45,6 +50,12 @@ private:
 	int activeBlockType;
 	int lastActiveBlockType;
 	int activeBlocks;
+	int yaw;
+	int roll;
+	int pitch;
+	bool input;
+
+	std::vector<ActiveBlockPos> activeBlockLocation;
 	std::vector<InactiveBlocksVertices> inactiveBlockVertices;
 
 	bool activeBlockIsMoving; //when true it makes it so that player cannot rotate or move it anymore!
@@ -71,8 +82,9 @@ private:
 	glm::vec3 cameraUp;
 
 	bool staticActiveBlockCollision(int key);
-	int getGridXLoc();
-	int getGridYLoc();
+	int getGridXLoc(int block);
+	int getGridYLoc(int block);
+	void updateActiveBlockPos(int type);
 	void renderInactiveBlock(int requestedLayer, GLuint& layer);
 	void renderAllSolidBlocks();
 	void moveActiveBlock();
@@ -84,4 +96,6 @@ private:
 	void light();
 	void transformations();
 	void setGridZLoc(int currGridLoc);
+	void activeBlockRotation(int yaw, int pitch, int roll);
+	bool canRotate();
 };

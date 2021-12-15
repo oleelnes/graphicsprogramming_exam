@@ -131,15 +131,49 @@ void game::input()
 		renderHandler->keyInput(3, cameraSpeed);
 	}
 
-
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_UP) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_DOWN) != GLFW_PRESS &&
 		glfwGetKey(gameWindow->winWindow, GLFW_KEY_LEFT) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_RIGHT) != GLFW_PRESS 
-		&& glfwGetKey(gameWindow->winWindow, GLFW_KEY_SPACE) == !GLFW_PRESS)
+		&& glfwGetKey(gameWindow->winWindow, GLFW_KEY_SPACE) == !GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_Q) != GLFW_PRESS 
+		&& glfwGetKey(gameWindow->winWindow, GLFW_KEY_A) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_W) != GLFW_PRESS && 
+		glfwGetKey(gameWindow->winWindow, GLFW_KEY_S) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_E) == !GLFW_PRESS
+		&& glfwGetKey(gameWindow->winWindow, GLFW_KEY_D) == !GLFW_PRESS)
 		buttonPressed = false;
+
+	//yaw
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_Q) == GLFW_PRESS && !buttonPressed) {
+		buttonPressed = true;
+		renderHandler->keyInput(4, cameraSpeed);
+	}
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_A) == GLFW_PRESS && !buttonPressed) {
+
+		buttonPressed = true;
+		renderHandler->keyInput(5, cameraSpeed);
+	}
+	//pitch
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_W) == GLFW_PRESS && !buttonPressed) {
+		buttonPressed = true;
+		renderHandler->keyInput(6, cameraSpeed);
+
+	}
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_S) == GLFW_PRESS && !buttonPressed) {
+		buttonPressed = true;
+		renderHandler->keyInput(7, cameraSpeed);
+	}
+	//roll
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_E) == GLFW_PRESS && !buttonPressed) {
+		buttonPressed = true;
+		renderHandler->keyInput(8, cameraSpeed);
+
+	}
+	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_D) == GLFW_PRESS && !buttonPressed) {
+		buttonPressed = true;
+		renderHandler->keyInput(9, cameraSpeed);
+	}
+
 
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_SPACE) == GLFW_PRESS && !buttonPressed) {
 		buttonPressed = true;
-		renderHandler->keyInput(4, cameraSpeed);
+		renderHandler->keyInput(10, cameraSpeed);
 		timeBuffer += time - 7.0f;
 	}
 

@@ -30,17 +30,27 @@ RenderHandler::RenderHandler(){
 		else
 			grid[i] = 1;
 	}
+	for (int i = 0; i < 4; i++) {
+		activeBlockLocation.push_back({});
+		auto& vertex = activeBlockLocation.back();
+		vertex.location = { 0.0f, 0.0f, 0.0f };
+	}
 	inactiveBlockVertices.push_back({});
 	auto& vertex = inactiveBlockVertices.back();
 	vertex.type = 0; // what type of block
 	vertex.vertices = 0; // how many vertices to draw
 	vertex.layer = 10; //sentinel key
+	vertex.verticeMultiplier = 1;
 	solidBlocks = 0; //counter that is used to access the various entries of the inactiveBlockVertices-vector/solidBlocks-vector
 	gridZLoc = 0;
 	drawcallcounter = 0;
 	activeBlockType = 0;
 	lastActiveBlockType = 0;
 	activeBlocks = 1;
+	input = false;
+	yaw = 0;
+	roll = 0;
+	pitch = 0;
 
 	srand(time(NULL)); rand(); //initiating random sequence and throwing away first random value
 }
@@ -85,21 +95,73 @@ void RenderHandler::keyInput(int key, float speed){
 	//up
 	else {
 		if (key == 0 && !activeBlockIsMoving)
-			activeBlock_y += 1;
+			activeBlock_y += 1; input = true;
 		//down
 		if (key == 1 && !activeBlockIsMoving)
-			activeBlock_y -= 1;
+			activeBlock_y -= 1; input = true;
 		//left
 		if (key == 2 && !activeBlockIsMoving)
-			activeBlock_x += 1;
+			activeBlock_x += 1; input = true;
 		//right
 		if (key == 3 && !activeBlockIsMoving)
-			activeBlock_x -= 1;
+			activeBlock_x -= 1; input = true;
+
+		//ROTATION INPUT:
+		// yaw +1
+		if (key == 4 && !activeBlockIsMoving && canRotate()) {
+			roll++;
+			if (roll >= 4) roll = 0;
+			input = true;
+		}
+		//yaw -1
+		if (key == 5 && !activeBlockIsMoving && canRotate()) {
+			roll--;
+			if (roll <= -1) roll = 3;
+			input = true;
+		}
+		//pitch +1
+		if (key == 6 && !activeBlockIsMoving) {
+
+		}
+
+		//pitch -1
+		if (key == 7 && !activeBlockIsMoving) {
+
+		}
+
+		//roll +1
+		if (key == 8 && !activeBlockIsMoving) {
+
+		}
+
+		//roll -1
+		if (key == 9 && !activeBlockIsMoving) {
+
+		}
+
+
 	}
 	//space:
-	if (key == 4) {
+	if (key == 10) {
 		activeBlockIsMoving = true;
 	}
+}
+
+void RenderHandler::activeBlockRotation(int yaw, int pitch, int roll) {
+	std::vector<ActiveBlockPos> tempVec;
+	for (int i = 0; i < 4; i++) {
+		tempVec.push_back({});
+		auto& vertex = tempVec.back();
+		vertex.location = { 0.0f, 0.0f, 0.0f };
+	}
+	for (int r = 0; r < roll; r++) {
+		for (int i = 0; i < 4; i++) {
+			tempVec[i].location = { activeBlock_x + ((activeBlock_y - activeBlockLocation[i].location.y)), activeBlock_y - (activeBlock_x - activeBlockLocation[i].location.x), activeBlockLocation[i].location.z };
+			std::cout << activeBlock_y << std::endl;
+			activeBlockLocation[i].location = tempVec[i].location;
+		}
+	}
+	
 }
 
 void RenderHandler::mouseInput(glm::vec3 direction){
@@ -110,7 +172,8 @@ void RenderHandler::renderActiveBlock(){
 	cube->shader->use();
 	if (firstActiveBlockCall) {
 		//function that adds previous block's location to the grid
-		glGenVertexArrays(1, &blocksVAO);
+		//glGenVertexArrays(1, &blocksVAO);
+		
 		lastActiveBlockType = activeBlockType;
 		activeBlockType = rand() % 4; //this gives us either 0, 1, 2 or 3
 		if (activeBlockType == lastActiveBlockType) {
@@ -119,34 +182,44 @@ void RenderHandler::renderActiveBlock(){
 		}
 		if (activeBlockType > 3 || activeBlockType < 0) activeBlockType = 2;
 		std::cout << "active block type: " << activeBlockType << std::endl;
+
+		//TODO: These ifs are redunant - fix it when rotation is done
 		if (activeBlockType == 0) {
 			activeBlocks = 1;
-			blocksVAO = block->newActiveBlock(0, 1.0f, 1.0f, 1.0f);
+			blocksVAO = block->newActiveBlock(0, 1.0f, 1.0f, 1.0f, roll, pitch, yaw);
 			firstActiveBlockCall = false;
 			std::cout << " in 0 " <<  std::endl;
 		}
 		else if (activeBlockType == 1) { //L
 			activeBlocks = 4;
-			blocksVAO = block->newActiveBlock(1, 1.0f, 1.0f, 1.0f);
+			blocksVAO = block->newActiveBlock(1, 1.0f, 1.0f, 1.0f, roll, pitch, yaw);
 			firstActiveBlockCall = false;
 			std::cout << " in 1 " << std::endl;
+
+			
 		}
 		else if (activeBlockType == 2) { //Z
 			activeBlocks = 4;
-			blocksVAO = block->newActiveBlock(2, 1.0f, 1.0f, 1.0f);
+			blocksVAO = block->newActiveBlock(2, 1.0f, 1.0f, 1.0f, roll, pitch, yaw);
 			firstActiveBlockCall = false;
 			std::cout << " in 2 " << std::endl;
 		}
 		else { //T
 			activeBlocks = 4;
-			blocksVAO = block->newActiveBlock(3, 1.0f, 1.0f, 1.0f);
+			blocksVAO = block->newActiveBlock(3, 1.0f, 1.0f, 1.0f, roll, pitch, yaw);
 			firstActiveBlockCall = false;
 			std::cout << " in 3 " << std::endl;
 		}
 	}
+	if (input) {
+		//glGenVertexArrays(1, &blocksVAO);
+		blocksVAO = block->newActiveBlock(activeBlockType, 1.0f, 1.0f, 1.0f, roll, pitch, yaw);
+		input = false;
+	}
 	glBindVertexArray(blocksVAO);
 	glBindTexture(GL_TEXTURE_2D, texture->activeBlockTexture);
 	//enables moving through translating position
+	//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 0.1f));
 	model = glm::translate(model, glm::vec3(activeBlock_x, activeBlock_y, activeBlock_z));
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	//drawing
@@ -184,7 +257,7 @@ void RenderHandler::renderInactiveBlock(int requestedLayer, GLuint& layer) {
 		if (inactiveBlockVertices[i].layer == requestedLayer) {
 			//std::cout << "requested layer/actual layer: " << inactiveBlockVertices[i].layer << " / " << requestedLayer << std::endl;
 			//glBindTexture(GL_TEXTURE_2D, layer);
-			glDrawArrays(GL_TRIANGLES, inactiveBlockVertices[i - 1].vertices, 36);
+			glDrawArrays(GL_TRIANGLES, inactiveBlockVertices[i - 1].vertices, 36 * inactiveBlockVertices[i].verticeMultiplier);
 			drawcallcounter++;
 			//std::cout << "drawcalls: " << drawcallcounter << std::endl;
 		}
@@ -245,19 +318,32 @@ void RenderHandler::moveActiveBlock(){
 }
 
 bool RenderHandler::movingActiveBlockCollision(){
-	int temp_z = activeBlock_z;
-	int grid_x = activeBlock_x + 3; //TODO: Change these to be equal to getGridLocX() and y
-	int grid_y = activeBlock_y + 2;
-	int gridLocation = (temp_z * 25) + ((grid_y - 1) * 5) + grid_x;
-	if (grid[gridLocation + 25] == 1 && gridLocation < 275 - 23) {
-		grid[gridLocation] = 1;
-		setGridZLoc(gridLocation);
-		firstActiveBlockCall = true;
-		//std::cout << "collision with gridloc: " << gridLocation + 25 << std::endl;
-		return true;
+	bool tempTrue = false;
+	for (int i = 0; i < activeBlocks; i++) {
+		updateActiveBlockPos(activeBlockType);
+		int temp_z = activeBlock_z;
+		int grid_x = getGridXLoc(i); //TODO: Change these to be equal to getGridLocX() and y
+		int grid_y = getGridYLoc(i);
+		int gridLocation = (temp_z * 25) + ((grid_y - 1) * 5) + grid_x;
+		if (grid[gridLocation + 25] == 1 && gridLocation < 275 - 23) {
+			//grid[gridLocation] = 1;
+			std::cout << "type " << activeBlockType << " collided and gridloc is " << gridLocation << " and grid of i is " << grid[gridLocation] << " and i is " << i << std::endl;
+			setGridZLoc(gridLocation);
+			tempTrue = true;
+		}
 	}
-	else 
-		return false;
+	if (tempTrue) {
+		for (int i = 0; i < activeBlocks; i++) {
+			updateActiveBlockPos(activeBlockType);
+			int temp_z = activeBlock_z;
+			int grid_x = getGridXLoc(i); //TODO: Change these to be equal to getGridLocX() and y
+			int grid_y = getGridYLoc(i);
+			int gridLocation = (temp_z * 25) + ((grid_y - 1) * 5) + grid_x;
+			grid[gridLocation] = 1;
+		}
+	}
+	if (tempTrue) { firstActiveBlockCall = true; return true;  }
+	else return false;
 }
 
 /*
@@ -265,68 +351,79 @@ bool RenderHandler::movingActiveBlockCollision(){
 	This function both resets the active block to its original position AND adds the previous activeBlock to the inactiveBlockVAO in Block.cpp (?)
 */
 void RenderHandler::newActiveBlock(){
-	blocksVAO = block->newActiveBlock(1, 1.0f, 1.0f, 1.0f);
+	//blocksVAO = block->newActiveBlock(1, 1.0f, 1.0f, 1.0f, roll, pitch, yaw);
 	//std::cout << "active z: " << activeBlock_z << " gridlocz: " << gridZLoc << std::endl;
 	glDeleteVertexArrays(1, &inactiveVAO);
 	glGenVertexArrays(1, &inactiveVAO);
-	inactiveVAO = block->activeToInactive(36, activeBlock_x, activeBlock_y, activeBlock_z);
+	inactiveVAO = block->activeToInactive(activeBlockType, activeBlock_x, activeBlock_y, activeBlock_z);
 
 	solidBlocks++;
 	inactiveBlockVertices.push_back({});
 	auto& vertex = inactiveBlockVertices.back();
 	vertex.type = 1;
 	vertex.layer = gridZLoc;
-	vertex.vertices = inactiveBlockVertices[solidBlocks - 1].vertices + 36;
-
-	//activeBlock_x = 0;  activeBlock_y = 0; activeBlock_z = 0; //setting the activeBlock locations to 0
-	//std::cout << "inactiveblock vertices: " << inactiveBlockVertices[solidBlocks].vertices << std::endl;
-	//std::cout << "vertex layer of solid block " << solidBlocks << " is " << inactiveBlockVertices[solidBlocks].layer << " and solidblocks is: " << solidBlocks << std::endl;
-	//std::cout << "vertices at "<< solidBlocks << " is: " << inactiveBlockVertices[solidBlocks].vertices << std::endl;
+	vertex.vertices = inactiveBlockVertices[solidBlocks - 1].vertices + 36 * activeBlocks;
+	vertex.verticeMultiplier = activeBlocks;
+	activeBlock_x = 0;  activeBlock_y = 0; activeBlock_z = 0; roll = 0; pitch = 0; yaw = 0;
 	inactive = true;
 }
 
 bool RenderHandler::staticActiveBlockCollision(int key)
 {
-	int grid_x = getGridXLoc();
-	int grid_y = getGridYLoc();
-	switch (key) {
-	case 0:
-		if (grid_y >= 5) return true;
-		else return false;
-		break;
-	case 1:
-		if (grid_y <= 1) return true;
-		else return false;
-		break;
+	int grid_x = getGridXLoc(0);
+	int grid_y = getGridYLoc(0);
+	//std::cout << "activeblocktype: " << activeBlockType << " active blocks: " << activeBlocks <<  std::endl;
+	for (int i = 0; i < activeBlocks; i++) {
+		updateActiveBlockPos(activeBlockType);
+		int grid_x = getGridXLoc(i);
+		int grid_y = getGridYLoc(i);
+		switch (key) {
+		case 0: //UP
+			if (grid_y >= 5) return true;
+			break;
+		case 1: //DOWN
+			if (grid_y <= 1) return true;
+			break;
 
-	case 2:
-		if (grid_x >= 5) return true;
-		else return false;
-		break;
+		case 2: //RIGHT
+			if (grid_x >= 5) return true;
+			break;
 
-	case 3:
-		if (grid_x <= 1) return true;
-		else return false;
-		break;
+		case 3: //LEFT
+			if (grid_x <= 1) return true;
+			break;
 
-	default:
-		//std::cout << "not collision causing input " << std::endl;
-		break;
+		default:
+			break;
+		}
 	}
 	return false;
 }
 
+bool RenderHandler::canRotate() {
+	for (int i = 0; i < activeBlocks; i++) {
+		int grid_x = getGridXLoc(i);
+		int grid_y = getGridYLoc(i);
+		if (grid_y >= 5) return false;
+		if (grid_y <= 1) return false;
+		if (grid_x >= 5) return false;
+		if (grid_x <= 1) return false;
+	}
+	return true;
+}
 
 
-int RenderHandler::getGridXLoc()
+int RenderHandler::getGridXLoc(int block)
 {
-	int grid_x = activeBlock_x + 3;
+	//int grid_x = activeBlock_x + 3;
+	int grid_x = activeBlockLocation[block].location.x + 3;
 	return grid_x;
 }
 
-int RenderHandler::getGridYLoc()
+int RenderHandler::getGridYLoc(int block)
 {
-	int grid_y = activeBlock_y + 2;
+	//int grid_y = activeBlock_y + 2;
+	int grid_y = activeBlockLocation[block].location.y + 2;
 	return grid_y;
 }
 
@@ -346,6 +443,42 @@ void RenderHandler::setGridZLoc(int currGridLoc){
 	//std::cout << "grid location " << currGridLoc << " gave us a gridZLoc of " << gridZLoc << std::endl;
 }
 
+void RenderHandler::updateActiveBlockPos(int type){
+	switch (type) {
+	case 0:
+		activeBlockLocation[0].location = { activeBlock_x,			activeBlock_y,			activeBlock_z };
+		activeBlockLocation[1].location = { activeBlock_x,			activeBlock_y,			activeBlock_z };
+		activeBlockLocation[2].location = { activeBlock_x,			activeBlock_y,			activeBlock_z };
+		activeBlockLocation[3].location = { activeBlock_x,			activeBlock_y,			activeBlock_z };
+		activeBlockRotation(yaw, pitch, roll);
+		break;
+	case 1: //L Block
+		activeBlockLocation[0].location = { activeBlock_x,			activeBlock_y,			activeBlock_z }; //center
+		activeBlockLocation[1].location = { activeBlock_x + 1.0f,	activeBlock_y - 1.0f,	activeBlock_z };
+		activeBlockLocation[3].location = { activeBlock_x,			activeBlock_y + 1.0f,	activeBlock_z };
+		activeBlockLocation[2].location = { activeBlock_x,			activeBlock_y - 1.0f,	activeBlock_z };
+		activeBlockRotation(yaw, pitch, roll);
+		break;
+	case 2: //Z Block
+		activeBlockLocation[0].location = { activeBlock_x,			activeBlock_y,			activeBlock_z }; //center
+		activeBlockLocation[1].location = { activeBlock_x - 1.0f,	activeBlock_y,			activeBlock_z };
+		activeBlockLocation[2].location = { activeBlock_x,			activeBlock_y + 1.0f,	activeBlock_z };
+		activeBlockLocation[3].location = { activeBlock_x + 1.0f,	activeBlock_y + 1.0f,	activeBlock_z };
+		activeBlockRotation(yaw, pitch, roll);
+		break;
+	case 3: //T block
+		activeBlockLocation[0].location = { activeBlock_x,			activeBlock_y,			activeBlock_z }; //center
+		activeBlockLocation[1].location = { activeBlock_x - 1.0f,	activeBlock_y,			activeBlock_z };
+		activeBlockLocation[2].location = { activeBlock_x + 1.0f,	activeBlock_y,			activeBlock_z };
+		activeBlockLocation[3].location = { activeBlock_x,			activeBlock_y + 1.0f,	activeBlock_z };
+		activeBlockRotation(yaw, pitch, roll);
+		break;
+
+	default:
+		break;
+	}
+}
+
 
 void RenderHandler::updateSpeed(float gamespeed){
 	speed = gamespeed;
@@ -359,7 +492,7 @@ void RenderHandler::descend(){
 	activeBlock_z += 1.0f;
 	if (movingActiveBlockCollision()) {
 		newActiveBlock();
-		activeBlock_x = 0;  activeBlock_y = 0; activeBlock_z = 0;
+		//activeBlock_x = 0;  activeBlock_y = 0; activeBlock_z = 0;
 		activeBlockIsMoving = false;
 	}
 }
