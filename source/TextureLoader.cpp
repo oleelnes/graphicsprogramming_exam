@@ -1,5 +1,6 @@
 #include "TextureLoader.h"
 
+//Constructor -- loads all textures that are to be used
 TextureLoader::TextureLoader(){
 	gridTexture = load_opengl_texture("resources/textures/grid_tile.png");
 	activeBlockTexture = load_opengl_texture("resources/textures/active_block_tile.png");
@@ -17,6 +18,7 @@ TextureLoader::TextureLoader(){
 }
 
 /*
+	This function loads a texture from a picture file
 	Source 3 (see readme)
 */
 GLuint TextureLoader::load_opengl_texture(const std::string& filepath)

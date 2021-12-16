@@ -1,17 +1,23 @@
 #include "Tunnel.h"
 
+/*
+	This class contains all the necessary functions and variables to create the VAO of a tunnel
+*/
+
+
 struct Vertex {
 	glm::vec3 location;
 	glm::vec3 normals;
 	glm::vec2 texCoords;
 };
 
-Tunnel::Tunnel(){
-	
-}
 
-
-
+/*
+	This function creates the tunnel that the game takes place in
+	int x_stride: The width of the tunnel
+	int y_stride: The height of the tunnel
+	int z_stride: The depth of the tunnel
+*/
 unsigned int Tunnel::createCubeTunnel(int x_stride, int y_stride, int z_stride)
 {
 	const int left_plane = (y_stride * z_stride);
@@ -104,11 +110,6 @@ unsigned int Tunnel::createCubeTunnel(int x_stride, int y_stride, int z_stride)
 		}
 	}
 
-	//std::cout << "entries: " << tempVec.size() << std::endl;
-
-	//std::cout << "tempvec location 3 x: " << tempVec[1].location.x << std::endl;
-
-
 	unsigned int tunnel_VAO;
 	glGenVertexArrays(1, &tunnel_VAO);
 
@@ -125,9 +126,6 @@ unsigned int Tunnel::createCubeTunnel(int x_stride, int y_stride, int z_stride)
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
 	glEnableVertexAttribArray(2);
-	//i < 5 -> 5 planes to be drawn
-	//int cube_counter = 0;
-	
 	
 	return tunnel_VAO;
 }

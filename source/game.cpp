@@ -15,11 +15,12 @@ void game::gameInit(){
 	gameWindow->windowCreator();
 	renderHandler = new RenderHandler();
 	buttonPressed = false;
-	
 }
 
 
-
+/*
+	This function runs the game. The main while-loop for the OpenGL rendering recides within this function
+*/
 void game::run(){
 	gameInit();
 	
@@ -28,17 +29,11 @@ void game::run(){
 	ImGui_ImplOpenGL3_Init("#version 430 core");
 	
 	glEnable(GL_DEPTH_TEST);
-	//glDepthFunc(GL_ALWAYS);
-	//glfwWindowHint(GLFW_SAMPLES, 12);
-	//glEnable(GL_MULTISAMPLE);
-	//glEnable(GL_BLEND);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	deltaTime = 0.0f;
 	lastFrame = 0.0f;
 
 	int gamemode = 0;
 	int main_state = 0;
-	bool pauseMenu = false;
 	int score = 0;
 	int layer = 0;
 
@@ -48,32 +43,19 @@ void game::run(){
 	glClearColor(0.2f, 0.03f, 0.5f, 1.0f);
 	while (!glfwWindowShouldClose(gameWindow->winWindow)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		
 		float currentFrame = glfwGetTime();
-		
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 		renderHandler->updateSpeed(2.5 * deltaTime);
-		//renderHandler->renderer();
-		
-		
-		//ui.inGameStats(1, 2);
-		//std::cout << "shello" << std::endl;
 		
 		switch (main_state) {
 		case 0: //menu -- decides int gamemode and changes main_state to 1 or 2 depending on whether a gamemode has been selected or if exit game has been selected
 			glfwSetInputMode(gameWindow->winWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-			if (pauseMenu) {
-			}
-			else {
-				ui.mainMenu();
-				if (ui.gameStateTest != ui.mainmenu() && !buttonPressed) { main_state = main_state_switch(); renderHandler = new RenderHandler(); }
-				timeBuffer = glfwGetTime();
-			}
+			ui.mainMenu();
+			if (ui.gameStateTest != ui.mainmenu() && !buttonPressed) { main_state = main_state_switch(); renderHandler = new RenderHandler(); }
+			timeBuffer = glfwGetTime();
 			break;
 		case 1: //runs render and sends the gamemode variable
-			//main_state = renderHandler->render(gamemode); //gamemode has been decided in case 0/menu
 			time = glfwGetTime() - timeBuffer;
 			glfwSetInputMode(gameWindow->winWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 			renderHandler->renderer();
@@ -81,6 +63,8 @@ void game::run(){
 			layer = 11 - renderHandler->getLayer();
 			if (!renderHandler->getGameOver()) {
 				ui.inGameStats(score, layer, 7.0f - time);
+				//checks whether time before descent is up, if it is, the descend() function is called which will trigger a one block descent in the
+				//through the renderHandler-pointer
 				if (!checkTimeUp(time));
 				else renderHandler->descend();
 			}
@@ -92,30 +76,24 @@ void game::run(){
 				}
 			}
 			break;
-		case 2:
-			std::cout << "game will now exit!\tmain_state: " << main_state << " gamemode: " << gamemode << std::endl;
-
-			break;
-
 		default:
-			std::cout << "something very weird happened! This should absofruitely not happen!" << std::endl;
+			break;
 		}
-		
-		
 		input();
 		glfwPollEvents();
 		glfwSwapBuffers(gameWindow->winWindow);
-
 	}
 	ui.closeImgui();
 	glfwTerminate();
 }
 
+//If gamestate matches what ui.rungame() returns, 1 is returned, which means the main menu will be exited and the game will start
 int game::main_state_switch(){
 	if (ui.gameStateTest == ui.rungame()) { return 1; }
 	else return 0;
 }
 
+//This function checks for input and sends it to the keyInput-function through the renderHandler pointer
 void game::input()
 {
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
@@ -125,21 +103,21 @@ void game::input()
 	float cameraSpeed = 2.5 * deltaTime;
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_UP) == GLFW_PRESS && !buttonPressed) {
 		buttonPressed = true;
-		renderHandler->keyInput(0, cameraSpeed);
+		renderHandler->keyInput(0);
 	}
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_DOWN) == GLFW_PRESS && !buttonPressed) {
 
 		buttonPressed = true;
-		renderHandler->keyInput(1, cameraSpeed);
+		renderHandler->keyInput(1);
 	}
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_LEFT) == GLFW_PRESS && !buttonPressed) {
 		buttonPressed = true;
-		renderHandler->keyInput(2, cameraSpeed);
+		renderHandler->keyInput(2);
 
 	}
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_RIGHT) == GLFW_PRESS && !buttonPressed) {
 		buttonPressed = true;
-		renderHandler->keyInput(3, cameraSpeed);
+		renderHandler->keyInput(3);
 	}
 
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_UP) != GLFW_PRESS && glfwGetKey(gameWindow->winWindow, GLFW_KEY_DOWN) != GLFW_PRESS &&
@@ -153,38 +131,38 @@ void game::input()
 	//yaw
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_Q) == GLFW_PRESS && !buttonPressed) {
 		buttonPressed = true;
-		renderHandler->keyInput(4, cameraSpeed);
+		renderHandler->keyInput(4);
 	}
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_A) == GLFW_PRESS && !buttonPressed) {
 
 		buttonPressed = true;
-		renderHandler->keyInput(5, cameraSpeed);
+		renderHandler->keyInput(5);
 	}
 	//pitch
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_W) == GLFW_PRESS && !buttonPressed) {
 		buttonPressed = true;
-		renderHandler->keyInput(6, cameraSpeed);
+		renderHandler->keyInput(6);
 
 	}
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_S) == GLFW_PRESS && !buttonPressed) {
 		buttonPressed = true;
-		renderHandler->keyInput(7, cameraSpeed);
+		renderHandler->keyInput(7);
 	}
 	//roll
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_E) == GLFW_PRESS && !buttonPressed) {
 		buttonPressed = true;
-		renderHandler->keyInput(8, cameraSpeed);
+		renderHandler->keyInput(8);
 
 	}
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_D) == GLFW_PRESS && !buttonPressed) {
 		buttonPressed = true;
-		renderHandler->keyInput(9, cameraSpeed);
+		renderHandler->keyInput(9);
 	}
 
 
 	if (glfwGetKey(gameWindow->winWindow, GLFW_KEY_SPACE) == GLFW_PRESS && !buttonPressed) {
 		buttonPressed = true;
-		renderHandler->keyInput(10, cameraSpeed);
+		renderHandler->keyInput(10);
 		timeBuffer += time - 7.0f;
 	}
 
@@ -203,8 +181,4 @@ bool game::checkTimeUp(float time) {
 	else return false;;
 }
 
-void game::mouseInput()
-{
-	
-}
 

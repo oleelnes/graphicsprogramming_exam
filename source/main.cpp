@@ -2,15 +2,12 @@
 //
 /****************************************************
 	PROG2002 Graphics Programming
-	Assignment 2
-	Group 32, members:
-		- Anders Brunsberg Mariendal
-		- Ole Kristian Elnæs
- 
-	This program runs a 3D version of the classic game pacman
+	Exam
+	
+	This program runs a 3D version of the classic game tetris
 
-	* The main class creates a pointer to the game class named pacGame
-	* OpenGLInit, which house openGL and glfw initiation functions, is called, before pacGame->run() is called, which 
+	* The main class creates a pointer to the game class named game
+	* OpenGLInit, which house openGL and glfw initiation functions, is called, before game->run() is called, which 
 		leaves the rest of the work to the game-class
 *****************************************************/
 

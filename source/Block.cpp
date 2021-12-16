@@ -1,9 +1,11 @@
 #include "Block.h"
 
+/*
+	This class includes all the necessary functions for creating VAOs for both active and solid blocks
+*/
 
-
+// Constructor
 Block::Block(){
-//nothing yet
 	for (int i = 0; i < 36 * 4; i++) {
 		activeBlock.push_back({});
 		auto& vertex = activeBlock.back();
@@ -13,6 +15,16 @@ Block::Block(){
 	}
 }
 
+/*
+	This function creates and returns the VAO of the active blocks
+	int type: type/shape of block that is to be added
+	float loc_x: x offset of block to be added
+	float loc_y: y offset of block to be added
+	float loc_z: z offset of block to be added
+	int roll: the rotational roll that is to be added
+	int pitch: the rotational pitch that is to be added
+	int yaw: the rotational yaw that is to be added
+*/
 unsigned int Block::newActiveBlock(int type, float loc_x, float loc_y, float loc_z, int roll, int pitch, int yaw){
 	activeBlock.empty();
 	int blocks = 1;
@@ -53,9 +65,9 @@ unsigned int Block::newActiveBlock(int type, float loc_x, float loc_y, float loc
 		break;
 	case 3: //T block
 		blocks = 4;
-		x_1 = x_0 + 1.0f;
+		x_1 = x_0 - 1.0f;
 		y_1 = y_0;
-		x_2 = x_0 - 1.0f;
+		x_2 = x_0 + 1.0f;
 		y_2 = y_0;
 		x_3 = x_0;
 		y_3 = y_0 + 1.0f;
@@ -116,13 +128,20 @@ unsigned int Block::newActiveBlock(int type, float loc_x, float loc_y, float loc
 	return activeBlockVAO;
 }
 
-unsigned int Block::activeToInactive(int type, int x, int y, int z)
+/*
+	This function creates and returns the VAO of the solid blocks
+	int type: type/shape of block that is to be added
+	int x: x offset of block to be added
+	int y: y offset of block to be added
+	int z: z offset of block to be added
+*/
+unsigned int Block::activeToSolid(int type, int x, int y, int z)
 {
 	int multiplier = 1;
 	if (type != 0) multiplier = 4;
 	for (int i = 0; i < 36 * multiplier; i++) {
-		inactiveBlocks.push_back({});
-		auto& vertex = inactiveBlocks.back();
+		solidBlocks.push_back({});
+		auto& vertex = solidBlocks.back();
 
 		vertex.location = { activeBlock[i].location.x  + x, activeBlock[i].location.y  + y, activeBlock[i].location.z + z };
 		vertex.normals = activeBlock[i].normals;
@@ -137,7 +156,7 @@ unsigned int Block::activeToInactive(int type, int x, int y, int z)
 	glBindVertexArray(solidBlockVAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(BlockVertex) * inactiveBlocks.size(), inactiveBlocks.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(BlockVertex) * solidBlocks.size(), solidBlocks.data(), GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(BlockVertex), (void*)offsetof(BlockVertex, location));
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(BlockVertex), (void*)offsetof(BlockVertex, normals));

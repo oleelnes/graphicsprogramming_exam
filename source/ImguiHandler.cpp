@@ -3,7 +3,13 @@
 #include <sstream>
 
 /*
-	Source 2 (See readme)
+	This class handles all of the ImGui calls and rendering 
+	See source 2 in readme
+*/
+
+
+/*
+	This function draws the in-game stats
 */
 void ImguiHandler::inGameStats(int score, int layer, float time){
 	ImGuiWindowFlags window_flags = 0;					
@@ -33,6 +39,9 @@ void ImguiHandler::inGameStats(int score, int layer, float time){
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
+/*
+	This function draws the game over stats
+*/
 void ImguiHandler::gameOverStats(int score) {
 	ImGuiWindowFlags window_flags = 0;
 	window_flags |= ImGuiWindowFlags_NoMove;
@@ -63,7 +72,7 @@ void ImguiHandler::gameOverStats(int score) {
 }
 
 /*
-	Source 2 (See readme)
+	This function draws the main menu
 */
 void ImguiHandler::mainMenu(){
 	ImGuiWindowFlags window_flags = 0;						

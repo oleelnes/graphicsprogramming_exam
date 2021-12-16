@@ -3,7 +3,7 @@
 #
 cmake_minimum_required (VERSION 3.15)
 
-project ("Eksamen" VERSION 0.3)
+project ("Eksamen" VERSION 1.0)
 
 # executable file creation
 add_executable(${PROJECT_NAME})
@@ -23,17 +23,16 @@ target_sources(
     "source/game.h" 
     "source/Shader.cpp" 
     "source/Shader.h" 
-    "source/Externs.h" 
     "source/RenderHandler.cpp" 
     "source/RenderHandler.h" 
-     
-     
-     
-     "source/Tunnel.cpp" "source/Tunnel.h" 
-    "source/ImguiHandler.h" "source/ImguiHandler.cpp"
-    "source/Block.h" "source/Block.cpp"
-     "source/TextureLoader.cpp" "source/TextureLoader.h"
-    
+     "source/Tunnel.cpp" 
+     "source/Tunnel.h" 
+    "source/ImguiHandler.h" 
+    "source/ImguiHandler.cpp"
+    "source/Block.h" 
+    "source/Block.cpp"
+     "source/TextureLoader.cpp" 
+     "source/TextureLoader.h"
     ${CMAKE_CURRENT_LIST_DIR}/source/imgui/imconfig.h
     ${CMAKE_CURRENT_LIST_DIR}/source/imgui/imgui.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/imgui/imgui_demo.cpp
@@ -64,23 +63,15 @@ target_link_libraries(
     tinyobjloader
     stbimage::stbimage)
 
-    # Copying the triangle.vs file to current binary directory
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/shaders/triangle.vs
+    # Copying the blockout.vs file to current binary directory
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/shaders/blockout.vs
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/shaders)
 
-# Copying the triangle.fs file to current binary directory
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/shaders/triangle.fs
+# Copying the blockout.fs file to current binary directory
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/shaders/blockout.fs
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/shaders)
 
-         # Copying the triangle.vs file to current binary directory
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/shaders/light_cube.vs
-     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/shaders)
-
-# Copying the triangle.fs file to current binary directory
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/shaders/light_cube.fs
-     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/shaders)
-
-                         # Copying the pacman.png file to current binary directory
+# Copying the picture file to current binary directory
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/grid_tile.png
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
 
@@ -118,12 +109,6 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/textures/layer_2_ubrown.png
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources/textures)
 
 
-     # Enable C++ 17
-target_compile_features(
-    ${PROJECT_NAME}
-    PRIVATE
-    cxx_std_17
-)
 
 # Copy resources to binary directory
 add_custom_target(

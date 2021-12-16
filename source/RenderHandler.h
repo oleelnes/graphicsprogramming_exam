@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cstdlib>
 
-struct InactiveBlocksVertices {
+struct SolidBlocksVertices {
 	int type;
 	int vertices;
 	int verticeMultiplier;
@@ -19,11 +19,9 @@ struct ActiveBlockPos {
 class RenderHandler {
 public:
 	RenderHandler();
-	int render(int gamemode);
 	void renderer();
-	void keyInput(int key, float time);
+	void keyInput(int key);
 	void updateSpeed(float gamespeed);
-	void updateTime(float time);
 	void descend();
 	int getScore();
 	int getLayer();
@@ -35,9 +33,9 @@ private:
 	bool gameOver = false;
 	void setGameOver();
 	void renderActiveBlock();
-	unsigned int blocksVAO;
+	unsigned int activeBlocksVAO;
 	unsigned int tunnelVAO;
-	unsigned int inactiveVAO;
+	unsigned int solidBlocksVAO;
 	bool firstActiveBlockCall; //creates the VAO for the block!
 	bool inactive;
 
@@ -59,7 +57,7 @@ private:
 	bool input;
 
 	std::vector<ActiveBlockPos> activeBlockLocation;
-	std::vector<InactiveBlocksVertices> inactiveBlockVertices;
+	std::vector<SolidBlocksVertices> solidBlockVertices;
 
 	bool activeBlockIsMoving; //when true it makes it so that player cannot rotate or move it anymore!
 	int drawcallcounter;
@@ -84,11 +82,12 @@ private:
 	glm::vec3 cameraFront;
 	glm::vec3 cameraUp;
 
+	void renderTunnel();
 	bool staticActiveBlockCollision(int key);
 	int getGridXLoc(int block);
 	int getGridYLoc(int block);
 	void updateActiveBlockPos(int type);
-	void renderInactiveBlock(int requestedLayer, GLuint& layer);
+	void renderSolidBlock(int requestedLayer, GLuint& layer);
 	void renderAllSolidBlocks();
 	void moveActiveBlock();
 	bool movingActiveBlockCollision();
@@ -99,6 +98,6 @@ private:
 	void light();
 	void transformations();
 	void setGridZLoc(int currGridLoc);
-	void activeBlockRotation(int yaw, int pitch, int roll);
+	void activeBlockRotation();
 	bool canRotate();
 };

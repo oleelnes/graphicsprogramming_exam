@@ -1,86 +1,41 @@
 #include "RenderHandler.h"
 
 /*
+	This class is responsible for rendering the game scene 
 	This class creates pointers to:
-		* Shader (main_shader)
-		* Overlay (on-screen and real-time informative text such as score, health, stamina.
+		* Block class
+		* TextureLoader class
+		* Tunnel class
 	The Shader-pointer is sent to the functions in the draw-functions in the gamemode-classes.
 */
 
 
-
+//Constructor
 RenderHandler::RenderHandler(){
-	tunnel = new Tunnel();
-	block = new Block();
-	texture = new TextureLoader();
-	cameraInit();
-	projectionInit();
-	//Camera camera(glm::vec3(0.0f, 0.0f, 3.0f)); //initiating the camera. 
-	firstActiveBlockCall = true;
-	activeBlockIsMoving = false;
-	inactive = false;
-	glGenVertexArrays(1, &tunnelVAO);
-	tunnelVAO = tunnel->createCubeTunnel(5, 5, 10);
-	activeBlock_x = 2;
-	activeBlock_y = 1;
-	activeBlock_z = 0;
-	for (int i = 0; i < (11 * 5 * 5) + 25; i++) {
-		if (i <= 250)
-			grid[i] = 0;
-		else
-			grid[i] = 1;
-	}
-	for (int i = 0; i < 4; i++) {
-		activeBlockLocation.push_back({});
-		auto& vertex = activeBlockLocation.back();
-		vertex.location = { 0.0f, 0.0f, 0.0f };
-	}
-	inactiveBlockVertices.push_back({});
-	auto& vertex = inactiveBlockVertices.back();
-	vertex.type = 0; // what type of block
-	vertex.vertices = 0; // how many vertices to draw
-	vertex.layer = 10; //bottom layer
-	vertex.verticeMultiplier = 1;
-	solidBlocks = 0; //counter that is used to access the various entries of the inactiveBlockVertices-vector/solidBlocks-vector
-	gridZLoc = 0;
-	drawcallcounter = 0;
-	activeBlockType = 0;
-	lastActiveBlockType = 0;
-	activeBlocks = 1;
-	input = false;
-	yaw = 0;
-	roll = 0;
-	pitch = 0;
-	score = 0;
-	layer = 10;
-	srand(time(NULL)); rand(); //initiating random sequence and throwing away first random value
+	init();
 }
 
+/*
+	This function is the root function that initiates all other render-related functions of this class
+*/
 void RenderHandler::renderer(){
-	
-	
 	tunnel->shader->use();
 	light();
 	transformations();
 
-	//creating tunnel
-	glBindVertexArray(tunnelVAO);
-	tunnel->shader->setInt("withTexture", 1);
-	//glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture->gridTexture);
-	glDrawArrays(GL_TRIANGLES, 0, 6*(((5*10)*4)+(5*5))); //endret til 6
-	glBindVertexArray(0);
-	glUseProgram(0);
-	//glBindTexture(GL_TEXTURE_2D, 0);
-	//cube->shader->setInt("withTexture", 0);
+	//rendering tunnel
+	renderTunnel();
 
-
+	//render all solid blocks
 	if (inactive) renderAllSolidBlocks();
-	if (activeBlockIsMoving) moveActiveBlock();
-	if (!gameOver) {
-		renderActiveBlock();
-	}
 
+	//if active block is currently falling/moving, move active block
+	if (activeBlockIsMoving) moveActiveBlock();
+
+	//if !gameover, render the activeBlock
+	if (!gameOver) renderActiveBlock();
+	
+	//function that 
 	setGameOver();
 
 	glBindVertexArray(0);
@@ -88,13 +43,21 @@ void RenderHandler::renderer(){
 	glUseProgram(0);
 }
 
-void RenderHandler::init(){
-
+//Function that renders the tunnel
+void RenderHandler::renderTunnel() {
+	glBindVertexArray(tunnelVAO);
+	tunnel->shader->setInt("withTexture", 1);
+	glBindTexture(GL_TEXTURE_2D, texture->gridTexture);
+	glDrawArrays(GL_TRIANGLES, 0, 6 * (((5 * 10) * 4) + (5 * 5))); //endret til 6
+	glBindVertexArray(0);
+	glUseProgram(0);
 }
 
-
-
-void RenderHandler::keyInput(int key, float speed){
+/*
+	This function decides what happens when a certain key is pushed
+	int key: the key that has been pushed
+*/
+void RenderHandler::keyInput(int key){
 	if (staticActiveBlockCollision(key));//std::cout << "collision" << std::endl;
 	//up
 	else if (!gameOver){
@@ -144,22 +107,23 @@ void RenderHandler::keyInput(int key, float speed){
 			input = true;
 		}
 
-		//ryaw -1
+		//yaw -1
 		if (key == 9 && !activeBlockIsMoving && canRotate()) {
 			yaw--;
 			if (yaw <= -1) yaw = 3;
 			input = true;
 		}
-
-
-	}
-	//space:
-	if (key == 10) {
-		activeBlockIsMoving = true;
+		//space:
+		if ( key == 10) {
+			activeBlockIsMoving = true;
+		}
 	}
 }
 
-void RenderHandler::activeBlockRotation(int yaw, int pitch, int roll) {
+/*
+	This function adjusts the location of the active block depending on rotation
+*/
+void RenderHandler::activeBlockRotation() {
 	std::vector<ActiveBlockPos> tempVec;
 	for (int i = 0; i < 4; i++) {
 		tempVec.push_back({});
@@ -168,25 +132,9 @@ void RenderHandler::activeBlockRotation(int yaw, int pitch, int roll) {
 	}
 	for (int r = 0; r < roll; r++) {
 		for (int i = 0; i < 4; i++) {
-			
-			float pitch_y = 0.0f;
-			float pitch_z = 0.0f;
-			if (pitch == 1) {
-				pitch_z = - (activeBlock_y - activeBlockLocation[i].location.y) ;
-				pitch_y = 0.0f;
-			}
-			if (pitch == 2) {
-				pitch_z = 0.0f;
-				pitch_y = -1.0f;
-			}
-			if (pitch == 3) {
-				pitch_z = (activeBlock_y - activeBlockLocation[i].location.y);
-				pitch_y = 0.0f;
-			}
 			tempVec[i].location = { activeBlock_x + ((activeBlock_y - activeBlockLocation[i].location.y)), 
-				activeBlock_y - (activeBlock_x - activeBlockLocation[i].location.x)*pitch_y, 
-				activeBlockLocation[i].location.z + pitch_z};
-			std::cout << activeBlock_y << std::endl;
+				activeBlock_y - (activeBlock_x - activeBlockLocation[i].location.x), 
+				activeBlockLocation[i].location.z };
 			activeBlockLocation[i].location = tempVec[i].location;
 		}
 	}
@@ -202,12 +150,14 @@ bool RenderHandler::getGameOver()
 	return gameOver;
 }
 
+/*
+	This function renders the active block
+*/
 void RenderHandler::renderActiveBlock(){
 	tunnel->shader->use();
+	//when a new active block is first called, the underneath if-statement generated a new activeBlocksVAO with 
+	//a new randomly selected type of block
 	if (firstActiveBlockCall) {
-		//function that adds previous block's location to the grid
-		//glGenVertexArrays(1, &blocksVAO);
-		
 		lastActiveBlockType = activeBlockType;
 		activeBlockType = rand() % 4; //this gives us either 0, 1, 2 or 3
 		if (activeBlockType == lastActiveBlockType) {
@@ -215,45 +165,24 @@ void RenderHandler::renderActiveBlock(){
 			else activeBlockType++;
 		}
 		if (activeBlockType > 3 || activeBlockType < 0) activeBlockType = 2;
-		std::cout << "active block type: " << activeBlockType << std::endl;
 
-		//TODO: These ifs are redunant - fix it when rotation is done
-		if (activeBlockType == 0) {
-			activeBlocks = 1;
-			blocksVAO = block->newActiveBlock(0, 1.0f, 1.0f, activeBlock_z, roll, pitch, yaw);
-			firstActiveBlockCall = false;
-		}
-		else if (activeBlockType == 1) { //L
-			activeBlocks = 4;
-			blocksVAO = block->newActiveBlock(1, 1.0f, 1.0f, activeBlock_z, roll, pitch, yaw);
-			firstActiveBlockCall = false;
-		}
-		else if (activeBlockType == 2) { //Z
-			activeBlocks = 4;
-			blocksVAO = block->newActiveBlock(2, 1.0f, 1.0f, activeBlock_z, roll, pitch, yaw);
-			firstActiveBlockCall = false;
-		}
-		else { //T
-			activeBlocks = 4;
-			blocksVAO = block->newActiveBlock(3, 1.0f, 1.0f, activeBlock_z, roll, pitch, yaw);
-			firstActiveBlockCall = false;
-		}
+
+		if (activeBlockType == 0) activeBlocks = 1;
+		else activeBlocks = 4;
+		activeBlocksVAO = block->newActiveBlock(activeBlockType, 1.0f, 1.0f, activeBlock_z, roll, pitch, yaw);
+		firstActiveBlockCall = false;
 	}
 	if (input) {
-		//glGenVertexArrays(1, &blocksVAO);
-		blocksVAO = block->newActiveBlock(activeBlockType, 1.0f, 1.0f, activeBlock_z, roll, pitch, yaw);
+		activeBlocksVAO = block->newActiveBlock(activeBlockType, 1.0f, 1.0f, activeBlock_z, roll, pitch, yaw);
 		input = false;
 	}
-	glBindVertexArray(blocksVAO);
+	glBindVertexArray(activeBlocksVAO);
 	glBindTexture(GL_TEXTURE_2D, texture->activeBlockTexture);
 	//enables moving through translating position
-	//model = glm::rotate(model, glm::radians(90.0f*pitch), glm::vec3(0.0f, 0.0f, 0.0f));
-
 	model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(activeBlock_x, activeBlock_y, activeBlock_z));
 	//model = glm::rotate(model, glm::radians(90.0f * pitch), glm::vec3(1, 0, 0));
 	model = glm::rotate(model, glm::radians(90.0f * yaw), glm::vec3(0, 1, 0));
-	//model = glm::translate(model, glm::vec3(activeBlock_x, activeBlock_y, activeBlock_z));
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	//drawing
 	glDrawArrays(GL_TRIANGLES, 0, 36 * activeBlocks);
@@ -261,38 +190,37 @@ void RenderHandler::renderActiveBlock(){
 	glUseProgram(0);
 }
 
-
+/*
+	This function's purpose is to ensure the rendering of all solid blocks
+*/
 void RenderHandler::renderAllSolidBlocks(){
 	drawcallcounter = 0;
-	renderInactiveBlock(10, texture->layer_10);
-	renderInactiveBlock(9, texture->layer_9);
-	renderInactiveBlock(8, texture->layer_8);
-	renderInactiveBlock(7, texture->layer_7);
-	renderInactiveBlock(6, texture->layer_6);
-	renderInactiveBlock(5, texture->layer_5);
-	renderInactiveBlock(4, texture->layer_4);
-	renderInactiveBlock(3, texture->layer_3);
-	renderInactiveBlock(2, texture->layer_2);
+	renderSolidBlock(10, texture->layer_10);
+	renderSolidBlock(9, texture->layer_9);
+	renderSolidBlock(8, texture->layer_8);
+	renderSolidBlock(7, texture->layer_7);
+	renderSolidBlock(6, texture->layer_6);
+	renderSolidBlock(5, texture->layer_5);
+	renderSolidBlock(4, texture->layer_4);
+	renderSolidBlock(3, texture->layer_3);
+	renderSolidBlock(2, texture->layer_2);
 }
 
 /*
-	This function is called by
+	This function is called by renderAllSolidBlocks
+	int requestedLayer: the layer to draw blocks at 
+	GLuint& layer: a reference to a layer-specific texture
 */
-void RenderHandler::renderInactiveBlock(int requestedLayer, GLuint& layer) {
+void RenderHandler::renderSolidBlock(int requestedLayer, GLuint& layer) {
 	tunnel->shader->use();
-
-	glBindVertexArray(inactiveVAO);
+	glBindVertexArray(solidBlocksVAO);
 	model = glm::mat4(1.0f);
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glBindTexture(GL_TEXTURE_2D, layer);
-	
 	for (int i = 1; i <= solidBlocks; i++) {
-		if (inactiveBlockVertices[i].layer == requestedLayer) {
-			//std::cout << "requested layer/actual layer: " << inactiveBlockVertices[i].layer << " / " << requestedLayer << std::endl;
-			//glBindTexture(GL_TEXTURE_2D, layer);
-			glDrawArrays(GL_TRIANGLES, inactiveBlockVertices[i - 1].vertices, 36 * inactiveBlockVertices[i].verticeMultiplier);
+		if (solidBlockVertices[i].layer == requestedLayer) {
+			glDrawArrays(GL_TRIANGLES, solidBlockVertices[i - 1].vertices, 36 * solidBlockVertices[i].verticeMultiplier);
 			drawcallcounter++;
-			//std::cout << "drawcalls: " << drawcallcounter << std::endl;
 		}
 	}
 
@@ -301,6 +229,10 @@ void RenderHandler::renderInactiveBlock(int requestedLayer, GLuint& layer) {
 
 }
 
+/*
+	This function moves an active block given that the active block doesn't collide with the tunnel far-plane or any solid blocks,
+	if a crash is detected, the moving stops and newActiveBlock() is called
+*/
 void RenderHandler::moveActiveBlock(){
 	if(!movingActiveBlockCollision())
 		activeBlock_z += 5.5 * speed;
@@ -312,6 +244,12 @@ void RenderHandler::moveActiveBlock(){
 	}
 }
 
+/*
+	This function checks whether a moving active block (space has been pressed) is crashing with either a the far tunnel wall or 
+	a solid block 
+	This function is also called every time a static(-ish) active block descends one block further down when seven seconds have passed without 
+	submitting the block
+*/
 bool RenderHandler::movingActiveBlockCollision(){
 	bool tempTrue = false;
 	for (int i = 0; i < activeBlocks; i++) {
@@ -342,22 +280,32 @@ bool RenderHandler::movingActiveBlockCollision(){
 }
 
 /*
-	TODO: make it newActiveBlock(int type) where type corresponds to how many vertices and what type will be added to the inactiveBlockVertices vector
-	This function both resets the active block to its original position AND adds the previous activeBlock to the inactiveBlockVAO in Block.cpp (?)
+	Function that, when called, descends a static(-ish) active block one block further down the tunnel
+	This function is called from the game.class
+*/
+void RenderHandler::descend() {
+	activeBlock_z += 1.0f;
+	if (movingActiveBlockCollision()) {
+		newActiveBlock();
+		activeBlockIsMoving = false;
+	}
+}
+
+/*
+	This function both resets the active block to its original position AND adds the previous activeBlock to the solidBlocksVAO in Block.cpp (?)
+	Is called by moveActiveBlock() function
 */
 void RenderHandler::newActiveBlock(){
-	//blocksVAO = block->newActiveBlock(1, 1.0f, 1.0f, 1.0f, roll, pitch, yaw);
-	//std::cout << "active z: " << activeBlock_z << " gridlocz: " << gridZLoc << std::endl;
-	glDeleteVertexArrays(1, &inactiveVAO);
-	glGenVertexArrays(1, &inactiveVAO);
-	inactiveVAO = block->activeToInactive(activeBlockType, activeBlock_x, activeBlock_y, activeBlock_z);
+	glDeleteVertexArrays(1, &solidBlocksVAO);
+	glGenVertexArrays(1, &solidBlocksVAO);
+	solidBlocksVAO = block->activeToSolid(activeBlockType, activeBlock_x, activeBlock_y, activeBlock_z);
 
 	solidBlocks++;
-	inactiveBlockVertices.push_back({});
-	auto& vertex = inactiveBlockVertices.back();
+	solidBlockVertices.push_back({});
+	auto& vertex = solidBlockVertices.back();
 	vertex.type = 1;
 	vertex.layer = gridZLoc;
-	vertex.vertices = inactiveBlockVertices[solidBlocks - 1].vertices + 36 * activeBlocks;
+	vertex.vertices = solidBlockVertices[solidBlocks - 1].vertices + 36 * activeBlocks;
 	vertex.verticeMultiplier = activeBlocks;
 	if (gridZLoc < layer) layer = gridZLoc;
 	activeBlock_x = 2;  activeBlock_y = 1; activeBlock_z = 0; roll = 0; pitch = 0; yaw = 0;
@@ -365,6 +313,10 @@ void RenderHandler::newActiveBlock(){
 	score += 5 * activeBlocks;
 }
 
+/*
+	This function checks whether the active block is colliding with the walls when it's still static(-ish)
+	int key: what arrow key is pushed, in order to know where to look
+*/
 bool RenderHandler::staticActiveBlockCollision(int key)
 {
 	int grid_x = getGridXLoc(0);
@@ -397,6 +349,7 @@ bool RenderHandler::staticActiveBlockCollision(int key)
 	return false;
 }
 
+//Function that checks whether a rotation is possible -> not fully completed
 bool RenderHandler::canRotate() {
 	for (int i = 0; i < activeBlocks; i++) {
 		int grid_x = getGridXLoc(i);
@@ -412,19 +365,20 @@ bool RenderHandler::canRotate() {
 
 int RenderHandler::getGridXLoc(int block)
 {
-	//int grid_x = activeBlock_x + 3;
 	int grid_x = activeBlockLocation[block].location.x + 1; //+3
 	return grid_x;
 }
 
 int RenderHandler::getGridYLoc(int block)
 {
-	//int grid_y = activeBlock_y + 2;
 	int grid_y = activeBlockLocation[block].location.y + 1; //+2
 	return grid_y;
 }
 
-
+/*
+	This function sets the current z position of the active block
+	int currGridLoc: the current gridlocation of the active block.
+*/
 void RenderHandler::setGridZLoc(int currGridLoc){
 	if (currGridLoc <= 275 && currGridLoc > 250) gridZLoc = 11;
 	else if (currGridLoc <= 250 && currGridLoc > 225) gridZLoc = 10;
@@ -440,6 +394,10 @@ void RenderHandler::setGridZLoc(int currGridLoc){
 	//std::cout << "grid location " << currGridLoc << " gave us a gridZLoc of " << gridZLoc << std::endl;
 }
 
+/*
+	This function updates the active block's location data
+	int type: the shape of the active block
+*/
 void RenderHandler::updateActiveBlockPos(int type){
 	switch (type) {
 	case 0:
@@ -447,28 +405,28 @@ void RenderHandler::updateActiveBlockPos(int type){
 		activeBlockLocation[1].location = { activeBlock_x,			activeBlock_y,			activeBlock_z };
 		activeBlockLocation[2].location = { activeBlock_x,			activeBlock_y,			activeBlock_z };
 		activeBlockLocation[3].location = { activeBlock_x,			activeBlock_y,			activeBlock_z };
-		activeBlockRotation(yaw, pitch, roll);
+		activeBlockRotation();
 		break;
 	case 1: //L Block
 		activeBlockLocation[0].location = { activeBlock_x,			activeBlock_y,			activeBlock_z }; //center
 		activeBlockLocation[1].location = { activeBlock_x + 1.0f,	activeBlock_y - 1.0f,	activeBlock_z };
 		activeBlockLocation[3].location = { activeBlock_x,			activeBlock_y + 1.0f,	activeBlock_z };
 		activeBlockLocation[2].location = { activeBlock_x,			activeBlock_y - 1.0f,	activeBlock_z };
-		activeBlockRotation(yaw, pitch, roll);
+		activeBlockRotation();
 		break;
 	case 2: //Z Block
 		activeBlockLocation[0].location = { activeBlock_x,			activeBlock_y,			activeBlock_z }; //center
 		activeBlockLocation[1].location = { activeBlock_x - 1.0f,	activeBlock_y,			activeBlock_z };
 		activeBlockLocation[2].location = { activeBlock_x,			activeBlock_y + 1.0f,	activeBlock_z };
 		activeBlockLocation[3].location = { activeBlock_x + 1.0f,	activeBlock_y + 1.0f,	activeBlock_z };
-		activeBlockRotation(yaw, pitch, roll);
+		activeBlockRotation();
 		break;
 	case 3: //T block
 		activeBlockLocation[0].location = { activeBlock_x,			activeBlock_y,			activeBlock_z }; //center
 		activeBlockLocation[1].location = { activeBlock_x - 1.0f,	activeBlock_y,			activeBlock_z };
 		activeBlockLocation[2].location = { activeBlock_x + 1.0f,	activeBlock_y,			activeBlock_z };
 		activeBlockLocation[3].location = { activeBlock_x,			activeBlock_y + 1.0f,	activeBlock_z };
-		activeBlockRotation(yaw, pitch, roll);
+		activeBlockRotation();
 		break;
 
 	default:
@@ -481,28 +439,72 @@ void RenderHandler::updateSpeed(float gamespeed){
 	speed = gamespeed;
 }
 
-void RenderHandler::updateTime(float time)
-{
-}
 
-void RenderHandler::descend(){
-	activeBlock_z += 1.0f;
-	if (movingActiveBlockCollision()) {
-		newActiveBlock();
-		//activeBlock_x = 0;  activeBlock_y = 0; activeBlock_z = 0;
-		activeBlockIsMoving = false;
-	}
-}
 
+
+//returns game score
 int RenderHandler::getScore()
 {
 	return score;
 }
 
+//returns the closest layer (to the camera) that has been reached
 int RenderHandler::getLayer()
 {
 	return layer;
 }
+
+
+/*
+	RenderHandler's init function -> initializes a bunch of necessary variables, pointer, vectors, etc.
+*/
+void RenderHandler::init() {
+	tunnel = new Tunnel();
+	block = new Block();
+	texture = new TextureLoader();
+	cameraInit();
+	projectionInit();
+	//Camera camera(glm::vec3(0.0f, 0.0f, 3.0f)); //initiating the camera. 
+	firstActiveBlockCall = true;
+	activeBlockIsMoving = false;
+	inactive = false;
+	glGenVertexArrays(1, &tunnelVAO);
+	tunnelVAO = tunnel->createCubeTunnel(5, 5, 10);
+	activeBlock_x = 2;
+	activeBlock_y = 1;
+	activeBlock_z = 0;
+	for (int i = 0; i < (11 * 5 * 5) + 25; i++) {
+		if (i <= 250)
+			grid[i] = 0;
+		else
+			grid[i] = 1;
+	}
+	for (int i = 0; i < 4; i++) {
+		activeBlockLocation.push_back({});
+		auto& vertex = activeBlockLocation.back();
+		vertex.location = { 0.0f, 0.0f, 0.0f };
+	}
+	solidBlockVertices.push_back({});
+	auto& vertex = solidBlockVertices.back();
+	vertex.type = 0; // what type of block
+	vertex.vertices = 0; // how many vertices to draw
+	vertex.layer = 10; //bottom layer
+	vertex.verticeMultiplier = 1;
+	solidBlocks = 0; //counter that is used to access the various entries of the inactiveBlockVertices-vector/solidBlocks-vector
+	gridZLoc = 0;
+	drawcallcounter = 0;
+	activeBlockType = 0;
+	lastActiveBlockType = 0;
+	activeBlocks = 1;
+	input = false;
+	yaw = 0;
+	roll = 0;
+	pitch = 0;
+	score = 0;
+	layer = 10;
+	srand(time(NULL)); rand(); //initiating random sequence and throwing away first random value
+}
+
 
 /*
 	Source 4 (See readme for full referencing)

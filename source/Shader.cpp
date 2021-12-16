@@ -1,11 +1,16 @@
 #include "Shader.h"
 
 /*
-    Shader class -- made by following and heavily inspired by LearnOpenGl.com's tutorial on shaders. See source 1.
+    Shader class -- made by following and heavily inspired by LearnOpenGl.com's tutorial on shaders. 
+    SOURCE 1 -- SEE README!
 
 */
 
-
+/*
+    This function creates a shaderprogram consisting of a vertexshader and a fragmentshader
+    const char* vertexPath: the filepath of the vertexshader
+    const char* fragmentPath: the filepath of the fragmentshader
+   */
 Shader::Shader(const char* vertexPath, const char* fragmentPath){
     std::string vertexCode;
     std::string fragmentCode;
@@ -68,6 +73,7 @@ void Shader::use(){
     glUseProgram(ID);
 }
 
+//A bunch of functions that set uniform variables in the shaders of the shaderprogram
 void Shader::setBool(const std::string& name, bool value) const{
     glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
 }
@@ -93,7 +99,7 @@ void Shader::setMat4(const std::string& name, const glm::mat4& mat) const
     glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-/*returns uniform location*/
+//This function returns uniform locations
 unsigned int Shader::getUniformLoc(const std::string& name)
 {
     glUseProgram(ID);
@@ -101,7 +107,9 @@ unsigned int Shader::getUniformLoc(const std::string& name)
     return ret_shader;
 }
 
-/* This method checks whether any errors has occurred during the set-up*/
+/*
+    This function checks whether any compile errors has found place during the creation of the shader program
+*/
 void Shader::checkCompileErrors(unsigned int shader, std::string type)
 {
     int success;

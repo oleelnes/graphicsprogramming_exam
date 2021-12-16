@@ -23,10 +23,10 @@ struct BlockVertex {
 class Block {
 public:
     Block();
-    std::vector<BlockVertex> inactiveBlocks{};
+    std::vector<BlockVertex> solidBlocks{};
     std::vector<BlockVertex> activeBlock{};
     unsigned int newActiveBlock(int type, float loc_x, float loc_y, float loc_z, int roll, int pitch, int yaw);
-    unsigned int activeToInactive(int type, int x, int y, int z);
+    unsigned int activeToSolid(int type, int x, int y, int z);
    // unsigned int activeBlock(int type);
 private:
 
