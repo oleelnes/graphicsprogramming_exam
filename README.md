@@ -81,9 +81,13 @@ and location; roll rotation added.
 
 ## TASKS: 
 Task 1: Entire Task 1 fully done
+
 Task 2: Entire Task 2 fully done
+
 Task 3: Entire Task 3 fully done
+
 Task 4: Entire Task 4 fully done
+
 Task 5: Point 1 and 2 fully done, point 3 and 4 partially done
 
 ## ABOUT SOURCES
@@ -94,34 +98,47 @@ References to sources are in the code, either:
 
 
 ## SOURCE LIST
-1. Shader.h and Shader.cpp: 
+### 1: Shader.h and Shader.cpp: 
 Type: class
+
 Utilization of source: Almost an identical copy, mostly made by strictly following the steps of the tutorial.
+
 Accessed 17.11.2021. Available at: https://learnopengl.com/code_viewer_gh.php?code=includes/learnopengl/shader_s.h 
+
 Also avaiable at: https://learnopengl.com/Getting-started/Shaders
 
-2. ImguiHandler.cpp and ImguiHandler.h:
+### 2: ImguiHandler.cpp and ImguiHandler.h:
 Type: methodology
-Utilization of source: Tutorial material for the building of the class. The class is not a copy.
-2.1: Accessed 11.12.2021. Available at: https://blog.conan.io/2019/06/26/An-introduction-to-the-Dear-ImGui-library.html
-2.2: Accessed 11.12.2021. Available at: https://github.com/ocornut/imgui/tree/master/examples
-2.3: Accessed 09.12.2021. Available at: https://www.youtube.com/watch?v=nVaQuNXueFw&ab_channel=TheCherno
 
-3. TextureLoader.cpp -> load_opengl_texture-function
+Utilization of source: Tutorial material for the building of the class. The class is not a copy.
+
+1. Accessed 11.12.2021. Available at: https://blog.conan.io/2019/06/26/An-introduction-to-the-Dear-ImGui-library.html
+
+2. Accessed 11.12.2021. Available at: https://github.com/ocornut/imgui/tree/master/examples
+
+3. Accessed 09.12.2021. Available at: https://www.youtube.com/watch?v=nVaQuNXueFw&ab_channel=TheCherno
+
+### 3: TextureLoader.cpp -> load_opengl_texture-function
 Type: function: Line 24 to 51
+
 Utilization of source: Almost an identical copy of original, but with slight adjustments in order
 to fit my code better.
+
 Source: prog2002 course materials/labs -> lab04 -> GLuint load_opengl_texture(const std::string& filepath, GLuint slot)
 
-4. Camera, projection and transformation functions
+### 4: Camera, projection and transformation functions
 Type: Functions: line 511 to 580
-Utilization of sourceTutorial. Parts of the code are identical to that of the tutorial.
+
+Utilization of source: tutorial. Parts of the code are identical to that of the tutorial.
+
 Accessed 15.11.2021. Available at: https://learnopengl.com/Getting-started/Camera
 
-5. Fragment Shader
+### 5: Fragment Shader
 Utilization of source: Tutorial. Parts of the code are identical
+
 Accessed 15.11.2021. Available at: https://learnopengl.com/Lighting/Multiple-lights
 
-6. Vertex Shader 
+### 6: Vertex Shader 
 Utilization of source: Tutorial. Parts of the code are identical
+
 Accessed 15.11.2021. Available at: https://learnopengl.com/Lighting/Multiple-lights
