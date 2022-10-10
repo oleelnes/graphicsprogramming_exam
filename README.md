@@ -1,18 +1,18 @@
-BLOCKOUT Game
+# BLOCKOUT Game
 Exam for prog2002
 
-Version 1.0
+## Version 1.0
 
 Date: 16/12/2021
-Time: 002:40
+Time: 02:40
 
-New in version 1.0: 
+## New in version 1.0
 * Final version
 * Minor code improvements
 * Tidying up code
 
 
-How to run (visual studio): 
+## How to run (visual studio)
 1. Copy repository web link
 2. Open Visual Studio
 3. Select "Clone a repository"
@@ -23,7 +23,7 @@ How to run (visual studio):
 
 
 
-CONTROLS:
+## CONTROLS
 ESC: Exits game
 UP: Up
 DOWN: Down
@@ -38,12 +38,12 @@ E: YAW +1 -> not recommended for use
 D: YAW -1 -> not recommended for use
 
 
+## TEXTURES
+All textures are self-made.
 
-NOTE: All textures are self-made.
 
 
-
-VERSIONS:
+## VERSIONS
 0.1: The general layout of the level has been added. 
 0.2: Active block has been added but not completed; lighting improved.
 0.3: 2 textures added (self-drawn); collision mechanics under development; minor code improvements
@@ -58,21 +58,21 @@ and location; roll rotation added
 0.9: In-game stats; game over screen; pitch and yaw added with extremely limited functionality.
 1.0: Final version. See "new in version 1.0 above"
 
-TASKS: 
+## TASKS: 
 Task 1: Entire Task 1 fully done
 Task 2: Entire Task 2 fully done
 Task 3: Entire Task 3 fully done
 Task 4: Entire Task 4 fully done
 Task 5: Point 1 and 2 fully done, point 3 and 4 partially done
 
-ABOUT SOURCES:
+## ABOUT SOURCES
 References to sources are in the code, either:
-	1. At the top of a class (in the class' .cpp file)
-	2. Above a given function 
+1. At the top of a class (in the class' .cpp file)
+2. Above a given function 
 
 
 
-SOURCE LIST:
+## SOURCE LIST
 1. Shader.h and Shader.cpp: 
 Type: class
 Utilization of source: Almost an identical copy, mostly made by strictly following the steps of the tutorial.
